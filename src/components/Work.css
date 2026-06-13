@@ -1,0 +1,389 @@
+/* ═══════════════════════════════════════════════════════════
+   WORK SECTION — Featured product cards + secondary grid
+═══════════════════════════════════════════════════════════ */
+
+.work-section {
+  padding: 140px 0 100px;
+  position: relative;
+}
+
+/* ── Section header ── */
+.work-hero {
+  margin-bottom: 4.5rem;
+  max-width: 680px;
+}
+.work-hero-eyebrow {
+  display: block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--accent-gold);
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+.work-hero-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin: 0 0 1.25rem;
+}
+.work-hero-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ════════════════════════
+   FEATURED PRODUCT GRID
+════════════════════════ */
+.fp-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Featured card ── */
+.fp-card {
+  position: relative;
+  background: var(--bg-glass-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  padding: 2.75rem 3rem;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.fp-card:hover {
+  border-color: color-mix(in srgb, var(--fp-accent) 30%, transparent);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.18);
+}
+
+/* Top-edge shimmer on hover */
+.fp-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--fp-accent) 50%, transparent) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.fp-card:hover::before { opacity: 1; }
+
+/* Background decorative number */
+.fp-card-num-bg {
+  position: absolute;
+  bottom: -1.5rem;
+  right: 2rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(8rem, 18vw, 14rem);
+  font-weight: 900;
+  letter-spacing: -8px;
+  line-height: 1;
+  color: var(--fp-accent);
+  opacity: 0.03;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Card header row ── */
+.fp-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.fp-card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.fp-num-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--fp-accent);
+  opacity: 0.75;
+}
+.fp-category {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-glass);
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+.fp-role-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--fp-accent);
+  background: color-mix(in srgb, var(--fp-accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--fp-accent) 30%, transparent);
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── Title block ── */
+.fp-title-block {
+  margin-bottom: 2rem;
+}
+.fp-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  margin: 0 0 0.5rem;
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--fp-accent) 20%, transparent));
+}
+.fp-tagline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── Content grid: desc | contributions ── */
+.fp-content-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+  align-items: start;
+}
+.fp-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.85;
+  margin: 0;
+}
+.fp-right { display: flex; flex-direction: column; gap: 1rem; }
+.fp-block {}
+.fp-block-label {
+  display: block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.fp-contributions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.fp-contribution {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.fp-contrib-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--fp-accent);
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* ── Modules row ── */
+.fp-modules {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-glass);
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.fp-modules-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.fp-module-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  flex: 1;
+}
+.fp-module-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-glass);
+  padding: 4px 10px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+.fp-module-tag:hover {
+  color: var(--fp-accent);
+  border-color: color-mix(in srgb, var(--fp-accent) 35%, transparent);
+  background: color-mix(in srgb, var(--fp-accent) 6%, transparent);
+}
+
+/* ── Footer / CTA ── */
+.fp-footer {
+  margin-top: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.fp-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--fp-accent);
+  background: color-mix(in srgb, var(--fp-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--fp-accent) 30%, transparent);
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.2px;
+}
+.fp-cta:hover {
+  background: color-mix(in srgb, var(--fp-accent) 15%, transparent);
+  border-color: color-mix(in srgb, var(--fp-accent) 55%, transparent);
+  transform: translateX(3px);
+}
+
+/* ════════════════════════
+   SECONDARY PRODUCTS
+════════════════════════ */
+.sp-section {
+  margin-top: 6rem;
+}
+.sp-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+.sp-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  margin: 0;
+}
+.sp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+.sp-card {
+  background: var(--bg-glass-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.sp-card:hover {
+  border-color: rgba(223,183,67,0.2);
+  transform: translateY(-3px);
+}
+.sp-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.sp-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+.sp-category {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.sp-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+.sp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+.sp-tag {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-glass);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ════════════════════════
+   RESPONSIVE
+════════════════════════ */
+@media (max-width: 1024px) {
+  .fp-content-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .fp-card { padding: 2rem 2.25rem; }
+}
+@media (max-width: 768px) {
+  .work-section { padding: 100px 0 80px; }
+  .fp-card { padding: 1.75rem 1.5rem; }
+  .fp-name { letter-spacing: -1px; }
+  .fp-card-num-bg { font-size: 7rem; }
+  .sp-grid { grid-template-columns: 1fr; }
+  .fp-modules { flex-direction: column; gap: 0.75rem; }
+  .fp-card-header { flex-direction: column; align-items: flex-start; }
+}

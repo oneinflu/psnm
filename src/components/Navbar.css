@@ -1,0 +1,89 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  border-bottom: 1px solid var(--border-glass);
+  background: rgba(4, 4, 6, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.logo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.logo-accent {
+  color: var(--accent-gold);
+  text-shadow: 0 0 10px rgba(223, 183, 67, 0.5);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--accent-gold);
+  transition: width 0.2s ease;
+  box-shadow: 0 0 8px var(--accent-gold);
+}
+
+.nav-link:hover { color: var(--text-primary); }
+.nav-link:hover::after { width: 100%; }
+
+/* Route-link nav items — same style as regular links by default */
+.nav-link--special {
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-decoration: none;
+}
+/* Active route gets the gold treatment */
+.nav-link--active,
+.nav-link--special.active {
+  color: var(--accent-gold) !important;
+  font-weight: 600;
+}
+.nav-link--active::after,
+.nav-link--special.active::after {
+  width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+}

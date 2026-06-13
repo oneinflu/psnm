@@ -1,0 +1,209 @@
+/* ═══════════════════════════════════════════════════════════
+   IMPACT SECTION — Outcome cards with animated counters
+═══════════════════════════════════════════════════════════ */
+
+.impact-section {
+  padding: 140px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background ambient */
+.impact-bg-ambient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 50%, rgba(223,183,67,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 85% 50%, rgba(129,140,248,0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Section header ── */
+.impact-section-header {
+  margin-bottom: 4rem;
+}
+
+.impact-eyebrow {
+  display: block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--accent-gold);
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+.impact-heading {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -2.5px;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ── Grid: 2×2 large cards ── */
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* ── Card ── */
+.impact-card {
+  position: relative;
+  background: var(--bg-glass-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.impact-card:hover {
+  border-color: color-mix(in srgb, var(--card-accent, var(--accent-gold)) 35%, transparent);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+}
+
+/* Top-edge shimmer */
+.impact-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--card-accent, var(--accent-gold)) 40%, transparent) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.impact-card:hover::before { opacity: 1; }
+
+/* Glow orb */
+.impact-card-glow {
+  position: absolute;
+  bottom: -40%;
+  right: -20%;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--card-accent) 12%, transparent) 0%, transparent 70%);
+  pointer-events: none;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0.6;
+}
+.impact-card:hover .impact-card-glow {
+  transform: scale(1.3);
+  opacity: 1;
+}
+
+/* Card inner */
+.impact-card-inner {
+  position: relative;
+  z-index: 1;
+  padding: 2.5rem 3rem 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 300px;
+}
+
+/* Context label */
+.impact-context {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+/* Big number */
+.impact-number-wrap {
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.impact-number {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(4.5rem, 8vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -4px;
+  line-height: 0.95;
+  display: block;
+  /* Per-card accent color as gradient */
+  background: linear-gradient(
+    135deg,
+    var(--card-accent, var(--accent-gold)) 0%,
+    color-mix(in srgb, var(--card-accent, var(--accent-gold)) 60%, #fff) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 24px color-mix(in srgb, var(--card-accent, var(--accent-gold)) 30%, transparent));
+}
+
+/* Metric label */
+.impact-metric {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+  margin: 0 0 1.25rem;
+  line-height: 1.3;
+}
+
+/* Caption */
+.impact-caption {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin: 0;
+  flex: 1;
+}
+
+/* Progress bar */
+.impact-bar-track {
+  margin-top: 2rem;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.impact-bar-fill {
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--card-accent, var(--accent-gold)) 0%,
+    color-mix(in srgb, var(--card-accent, var(--accent-gold)) 60%, #fff) 100%
+  );
+  box-shadow: 0 0 10px var(--card-accent, var(--accent-gold));
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .impact-card-inner { min-height: 260px; padding: 2rem 2.25rem; }
+}
+
+@media (max-width: 768px) {
+  .impact-grid { grid-template-columns: 1fr; }
+  .impact-section { padding: 100px 0; }
+  .impact-heading { letter-spacing: -1.5px; }
+  .impact-number { letter-spacing: -3px; }
+  .impact-card-inner { padding: 2rem; min-height: auto; }
+}

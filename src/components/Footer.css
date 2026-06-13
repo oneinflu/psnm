@@ -1,0 +1,29 @@
+.footer {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border-glass);
+  background: var(--bg-primary);
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copyright {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.back-to-top {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.back-to-top:hover { color: var(--accent-gold); }
+
+@media (max-width: 768px) {
+  .footer-container { flex-direction: column; gap: 1rem; text-align: center; }
+}

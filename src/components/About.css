@@ -1,0 +1,360 @@
+/* ═══════════════════════════════════════════════════════════
+   ABOUT / STORY PAGE
+   Full-screen overlay with scroll-animated career timeline
+═══════════════════════════════════════════════════════════ */
+
+.ab-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Nav ── */
+.ab-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 56px;
+  background: rgba(4, 4, 6, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-glass);
+  flex-shrink: 0;
+}
+.ab-nav-back {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.4rem 0;
+  transition: color 0.2s ease;
+}
+.ab-nav-back:hover { color: var(--text-primary); }
+.ab-nav-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+
+.ab-container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+/* ═══════════════
+   HERO
+═══════════════ */
+.ab-hero {
+  position: relative;
+  padding: 104px 0 80px;
+  overflow: hidden;
+}
+.ab-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 0%, rgba(223,183,67,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+.ab-hero-eyebrow {
+  display: block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--accent-gold);
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+}
+.ab-hero-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 1.04;
+  color: var(--text-primary);
+  margin: 0 0 2rem;
+}
+.ab-hero-sub {
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 520px;
+  margin: 0;
+}
+
+/* ═══════════════
+   TIMELINE SECTION
+═══════════════ */
+.ab-timeline-section {
+  padding: 60px 0 80px;
+}
+
+/* Outer timeline wrapper */
+.ab-timeline {
+  position: relative;
+  padding-left: 56px;
+}
+
+/* ── Spine ── */
+.ab-spine {
+  position: absolute;
+  left: 16px;
+  top: 8px;
+  bottom: 0;
+  width: 2px;
+}
+.ab-spine-track {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+}
+.ab-spine-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--accent-gold) 0%,
+    rgba(223,183,67,0.3) 100%
+  );
+  border-radius: 2px;
+  transform-origin: top;
+  /* Initial scaleY set by GSAP */
+}
+
+/* ── Dot ── */
+.ab-dot {
+  position: absolute;
+  left: -47px;
+  top: 12px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--stage-accent, var(--accent-gold));
+  box-shadow:
+    0 0 0 3px rgba(4,4,6,1),
+    0 0 0 5px color-mix(in srgb, var(--stage-accent, var(--accent-gold)) 30%, transparent),
+    0 0 16px color-mix(in srgb, var(--stage-accent, var(--accent-gold)) 40%, transparent);
+  transform-origin: center;
+  z-index: 2;
+}
+.ab-dot--last {
+  width: 18px;
+  height: 18px;
+  left: -49px;
+  box-shadow:
+    0 0 0 3px rgba(4,4,6,1),
+    0 0 0 6px color-mix(in srgb, var(--stage-accent) 35%, transparent),
+    0 0 24px color-mix(in srgb, var(--stage-accent) 50%, transparent),
+    0 0 40px color-mix(in srgb, var(--stage-accent) 25%, transparent);
+  animation: ab-dot-pulse 2.5s ease-in-out infinite;
+}
+@keyframes ab-dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(4,4,6,1), 0 0 0 6px color-mix(in srgb, var(--stage-accent) 35%, transparent), 0 0 24px color-mix(in srgb, var(--stage-accent) 50%, transparent); }
+  50%       { box-shadow: 0 0 0 3px rgba(4,4,6,1), 0 0 0 10px color-mix(in srgb, var(--stage-accent) 15%, transparent), 0 0 40px color-mix(in srgb, var(--stage-accent) 40%, transparent); }
+}
+
+/* ── Stage ── */
+.ab-stage {
+  position: relative;
+  margin-bottom: 80px;
+}
+.ab-stage:last-child { margin-bottom: 0; }
+
+.ab-stage-content {
+  /* x + opacity animated by GSAP */
+}
+
+/* Stage header row */
+.ab-stage-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.ab-stage-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  flex-shrink: 0;
+}
+.ab-stage-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Role title — the hero of each stage */
+.ab-role {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 0.95;
+  margin: 0;
+  color: var(--stage-accent, var(--accent-gold));
+  /* Per-stage accent color, set inline */
+  filter: drop-shadow(0 0 20px color-mix(in srgb, var(--stage-accent, var(--accent-gold)) 25%, transparent));
+}
+
+.ab-years {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+/* Chapter headline */
+.ab-headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin: 0 0 1rem;
+  font-style: italic;
+}
+
+/* Body paragraph */
+.ab-body {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.85;
+  margin: 0 0 1.5rem;
+  max-width: 620px;
+}
+
+/* Shift insight */
+.ab-shift {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 0;
+}
+.ab-shift-bar {
+  flex-shrink: 0;
+  width: 2px;
+  min-height: 44px;
+  background: linear-gradient(
+    to bottom,
+    var(--stage-accent, var(--accent-gold)),
+    color-mix(in srgb, var(--stage-accent, var(--accent-gold)) 20%, transparent)
+  );
+  border-radius: 2px;
+  margin-top: 2px;
+}
+.ab-shift-text {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Transition to next stage */
+.ab-transition {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0 0;
+  margin-top: 0.25rem;
+}
+.ab-transition-line {
+  width: 24px;
+  height: 1px;
+  background: var(--text-muted);
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+.ab-transition-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.2px;
+  font-style: italic;
+}
+.ab-transition-arrow {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  animation: ab-arrow-bob 1.8s ease-in-out infinite;
+}
+@keyframes ab-arrow-bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(3px); }
+}
+
+/* ═══════════════
+   CLOSING
+═══════════════ */
+.ab-closing {
+  padding: 80px 0 120px;
+  border-top: 1px solid var(--border-glass);
+}
+.ab-closing-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+.ab-closing-line {
+  width: 40px;
+  height: 2px;
+  background: var(--accent-gold);
+  border-radius: 2px;
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
+}
+.ab-closing-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin: 0;
+}
+.ab-closing-sub {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 480px;
+  margin: 0;
+}
+.ab-closing-actions { margin-top: 0.5rem; }
+
+/* ═══════════════
+   RESPONSIVE
+═══════════════ */
+@media (max-width: 768px) {
+  .ab-container { padding: 0 1.5rem; }
+  .ab-hero { padding: 64px 0 56px; }
+  .ab-hero-title { letter-spacing: -2px; }
+  .ab-role { letter-spacing: -2px; font-size: clamp(2.4rem, 10vw, 4rem); }
+  .ab-timeline { padding-left: 44px; }
+  .ab-spine { left: 12px; }
+  .ab-dot { left: -37px; }
+  .ab-dot--last { left: -39px; }
+  .ab-stage { margin-bottom: 60px; }
+  .ab-closing-title { letter-spacing: -1.5px; }
+}
