@@ -589,3 +589,11 @@
   .rl-hero-title { letter-spacing: -2px; }
   .rl-detail-name { letter-spacing: -1px; }
 }
+@media (max-width: 480px) {
+  .rl-stats-grid { grid-template-columns: 1fr 1fr; }
+  .rl-stat { padding: 1.25rem 1rem; }
+  .rl-main { padding: 50px 0; }
+  .rl-philosophy { padding: 50px 0; }
+  .rl-closing { padding: 56px 0 70px; }
+  .rl-next-btn { width: 100%; justify-content: center; }
+}

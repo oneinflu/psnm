@@ -358,3 +358,11 @@
   .ab-stage { margin-bottom: 60px; }
   .ab-closing-title { letter-spacing: -1.5px; }
 }
+@media (max-width: 480px) {
+  .ab-container { padding: 0 1.25rem; }
+  .ab-hero { padding: 48px 0 40px; }
+  .ab-timeline-section { padding: 40px 0 60px; }
+  .ab-closing { padding: 56px 0 80px; }
+  .ab-closing-actions .btn { width: 100%; justify-content: center; }
+  .ab-stage-header { flex-direction: column; gap: 0.5rem; }
+}

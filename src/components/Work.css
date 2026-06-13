@@ -387,3 +387,12 @@
   .fp-modules { flex-direction: column; gap: 0.75rem; }
   .fp-card-header { flex-direction: column; align-items: flex-start; }
 }
+@media (max-width: 480px) {
+  .work-section { padding: 80px 0 60px; }
+  .fp-card { padding: 1.5rem 1.25rem; }
+  .fp-footer { justify-content: stretch; }
+  .fp-cta { width: 100%; justify-content: center; }
+  .sp-card { padding: 1.25rem 1rem; }
+  .sp-section { margin-top: 4rem; }
+  .work-hero { margin-bottom: 3rem; }
+}

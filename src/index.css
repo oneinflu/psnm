@@ -27,12 +27,14 @@ html {
   background-color: var(--bg-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* prevent horizontal scroll caused by overflow elements */
 }
 
 body {
   color: var(--text-primary);
   overflow-x: hidden;
   line-height: 1.6;
+  max-width: 100%;
 }
 
 ::-webkit-scrollbar { width: 8px; }
@@ -131,4 +133,10 @@ body {
 
 @media (max-width: 768px) {
   .section-title { font-size: 2.25rem; }
+  .container { padding: 0 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 1.25rem; }
+  .btn-large { padding: 0.875rem 1.5rem; font-size: 0.95rem; }
 }

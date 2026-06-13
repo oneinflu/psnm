@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 100;
+  z-index: 200;
   border-bottom: 1px solid var(--border-glass);
   background: rgba(4, 4, 6, 0.6);
   backdrop-filter: blur(16px);
@@ -30,6 +30,8 @@
   color: var(--text-primary);
   text-decoration: none;
   letter-spacing: -0.5px;
+  flex-shrink: 0;
+  z-index: 201;
 }
 
 .logo-accent {
@@ -37,6 +39,7 @@
   text-shadow: 0 0 10px rgba(223, 183, 67, 0.5);
 }
 
+/* ── Desktop links ── */
 .nav-links {
   display: flex;
   align-items: center;
@@ -50,6 +53,7 @@
   font-weight: 500;
   transition: color 0.2s ease;
   position: relative;
+  white-space: nowrap;
 }
 
 .nav-link::after {
@@ -67,13 +71,14 @@
 .nav-link:hover { color: var(--text-primary); }
 .nav-link:hover::after { width: 100%; }
 
-/* Route-link nav items — same style as regular links by default */
+/* Route links — default same as regular links */
 .nav-link--special {
   color: var(--text-secondary);
   font-weight: 500;
   text-decoration: none;
 }
-/* Active route gets the gold treatment */
+
+/* Active route */
 .nav-link--active,
 .nav-link--special.active {
   color: var(--accent-gold) !important;
@@ -84,6 +89,127 @@
   width: 100% !important;
 }
 
+/* ── Right side group ── */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+/* ── Hamburger ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+  z-index: 201;
+  transition: border-color 0.2s ease;
+}
+
+.nav-hamburger:hover {
+  border-color: rgba(223, 183, 67, 0.3);
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--text-secondary);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-hamburger--open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+  background: var(--text-primary);
+}
+.nav-hamburger--open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav-hamburger--open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+  background: var(--text-primary);
+}
+
+/* ── Mobile drawer ── */
+/* NOTE: this element is a sibling of <header>, NOT inside it.
+   backdrop-filter on the header would break position:fixed for children. */
+.nav-mobile {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Fully opaque — no backdrop-filter dependency */
+  background: #040406;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 195;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2rem 3rem;
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  overflow-y: auto;
+}
+
+.nav-mobile--open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nav-mobile-links {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.nav-mobile-link {
+  display: block;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border-glass);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  transition: color 0.2s ease;
+}
+
+.nav-mobile-link:hover { color: var(--text-primary); }
+
+.nav-mobile-link--active {
+  color: var(--accent-gold) !important;
+}
+
+.nav-mobile-cta {
+  margin-top: 2rem;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ── Responsive breakpoints ── */
+@media (max-width: 900px) {
+  .nav-links { gap: 1.25rem; }
+}
+
 @media (max-width: 768px) {
   .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-cta { display: none; }
+  .nav-container { padding: 0 1.25rem; }
 }
