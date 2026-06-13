@@ -11,6 +11,8 @@ import About from './components/About'
 import ProductThinking from './components/ProductThinking'
 import ResearchLab from './components/ResearchLab'
 import AiLab from './components/AiLab'
+import GreetoCaseStudy from './components/GreetoCaseStudy'
+import MyExamlyCaseStudy from './components/MyExamlyCaseStudy'
 
 function HomePage() {
   return (
@@ -36,7 +38,9 @@ export default function App() {
       <Route path="/about"     element={<About />} />
       <Route path="/thinking"  element={<ProductThinking />} />
       <Route path="/research"  element={<ResearchLab />} />
-      <Route path="/ai-lab"    element={<AiLab />} />
+      <Route path="/ai-lab"      element={<AiLab />} />
+      <Route path="/work/greeto"    element={<GreetoCaseStudy />} />
+      <Route path="/work/myexamly"  element={<MyExamlyCaseStudy />} />
     </Routes>
   )
 }

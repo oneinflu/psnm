@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import CaseStudy from './CaseStudy'
@@ -73,11 +74,11 @@ export const PRODUCTS = [
     },
   },
 
-  // 2. Examly LMS ─────────────────────────────────────────────
+  // 2. MyExamly ─────────────────────────────────────────────
   {
     id: 'examly-lms',
-    name: 'Examly LMS',
-    tagline: 'AI-native learning platform for professional certifications — adaptive, predictive, and personalized at scale.',
+    name: 'MyExamly',
+    tagline: 'AI-powered certification exam prep platform — CPA, CMA & EA with adaptive scheduling and 94% first-attempt pass rate.',
     meta: { role: 'Head of Product & Growth', timeline: '2021–2023', platform: 'Web + Mobile' },
     tags: ['EdTech', 'LMS', 'AI', 'Certification', 'Assessment'],
     caseStudy: {
@@ -399,8 +400,8 @@ const FEATURED = [
   {
     num: '02',
     productId: 'examly-lms',
-    name: 'Examly LMS',
-    tagline: 'AI-Powered Learning Platform',
+    name: 'MyExamly',
+    tagline: 'AI-Powered Certification Exam Prep',
     category: 'EdTech · AI',
     desc: 'An AI-native Learning Management System built for professional certification programs including CPA, CMA, ACCA, CFA, and CIA. The platform combines adaptive assessments, personalized study plans, performance prediction, and AI-powered learning assistance to improve student outcomes and engagement.',
     contributions: ['Product Discovery', 'User Research', 'AI Feature Design', 'Learning Experience Strategy', 'MVP Planning', 'Product Roadmapping'],
@@ -586,9 +587,21 @@ function SecondaryCard({ item }) {
 // ═══════════════════════════════════════════════════════════
 //  WORK SECTION
 // ═══════════════════════════════════════════════════════════
+// Products with dedicated page routes instead of overlay
+const ROUTED_CASE_STUDIES = { greeto: '/work/greeto', 'examly-lms': '/work/myexamly' }
+
 export default function Work() {
+  const navigate    = useNavigate()
   const [openId, setOpenId] = useState(null)
   const openProduct = PRODUCTS.find(p => p.id === openId)
+
+  const handleOpenCaseStudy = (productId) => {
+    if (ROUTED_CASE_STUDIES[productId]) {
+      navigate(ROUTED_CASE_STUDIES[productId])
+    } else {
+      setOpenId(productId)
+    }
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -639,7 +652,7 @@ export default function Work() {
           {/* ── Featured products ── */}
           <div className="fp-grid">
             {FEATURED.map(item => (
-              <FeaturedCard key={item.productId} item={item} onOpenCaseStudy={setOpenId} />
+              <FeaturedCard key={item.productId} item={item} onOpenCaseStudy={handleOpenCaseStudy} />
             ))}
           </div>
 
