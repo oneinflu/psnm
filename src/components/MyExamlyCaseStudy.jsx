@@ -7,344 +7,340 @@ import './MyExamlyCaseStudy.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+const RESEARCH_METHODS = [
+  {
+    num: '01',
+    method: 'In-Depth User Interviews',
+    n: 52,
+    label: 'participants',
+    profile: 'Mix of active CPA/CMA candidates (working professionals + recent graduates), exam failures, and first-time passers',
+    format: '45–60 min · Semi-structured · Remote (Zoom)',
+    findings: [
+      'Daily study routine & time management',
+      'Emotional experience during prep',
+      'How candidates decide what to study each day',
+      'Past tool usage and frustrations',
+      'Confidence levels approaching exam',
+    ],
+  },
+  {
+    num: '02',
+    method: 'Contextual Inquiry',
+    n: 12,
+    label: 'sessions',
+    profile: 'Observed in actual study environments — home desk, commute, lunch breaks',
+    format: 'In-situ observation · Live note-taking',
+    findings: [
+      '8 of 12 had multiple browser tabs open — no single source of truth',
+      'Most handwrote "what I need to study" lists on paper or sticky notes',
+      'Work interruptions caused complete loss of momentum',
+    ],
+  },
+  {
+    num: '03',
+    method: 'Survey',
+    n: 340,
+    label: 'responses',
+    profile: 'CPA candidate communities, LinkedIn CPA groups, partner institutes',
+    format: 'Quantitative + open text · 12 questions',
+    findings: [
+      'Only 31% stick to a self-made study plan for more than 3 weeks',
+      '67% waste 15–40 min per session deciding what to study',
+      '79% describe high anxiety in the final 2 weeks before exam',
+      '54% who bought Becker or UWorld dropped active usage within 6 weeks',
+    ],
+  },
+  {
+    num: '04',
+    method: 'Competitive Benchmarking',
+    n: 5,
+    label: 'platforms',
+    profile: 'Becker CPA Review, UWorld CPA, Roger CPA, Surgent CPA, Ninja CPA',
+    format: '6 evaluation dimensions · 40+ hours of hands-on usage',
+    findings: [
+      'Becker & UWorld have deep content but overwhelming UI — students feel "lost in features"',
+      'No tool adapts the schedule dynamically if a student misses days',
+      'Analytics exist but are backward-looking — no actionable "study this now" signal',
+      'Mobile experience is secondary; none optimized for micro-learning on commutes',
+      'Price barrier ($2,500–$3,500) excludes large segments, especially international candidates',
+    ],
+  },
+  {
+    num: '05',
+    method: 'Diary Study',
+    n: 18,
+    label: 'participants',
+    profile: '3-week longitudinal — daily 2-min voice/text logs: what they did, how they felt, what blocked them',
+    format: '3 weeks · Daily logs · 18 active learners',
+    findings: [
+      'Study sessions under 30 min happened 3x more than planned 2-hour sessions',
+      'Emotional state (stressed from work) directly correlated with study skips',
+      'Students who scored well on a quiz stopped studying that topic — overconfidence bias',
+      'Weekends produced 60% of weekly study hours but with lower retention per hour',
+    ],
+  },
+]
+
+const AFFINITY_THEMES = [
+  { icon: '🧊', theme: 'Planning paralysis', desc: 'Candidates don\'t know where to start — the blank slate kills momentum before it begins.' },
+  { icon: '👻', theme: 'Progress invisibility', desc: 'Effort doesn\'t feel like it\'s compounding. Studying for months with no sense of forward motion.' },
+  { icon: '🎭', theme: 'Simulation gap', desc: 'Practice questions feel nothing like the real exam — creating false confidence or false failure.' },
+  { icon: '🏜', theme: 'Support desert', desc: 'No one to ask "is this answer right?" at 11pm when most working professionals study.' },
+  { icon: '🌊', theme: 'Life happens', desc: 'Work, family, and health derail even motivated candidates. No plan survives contact with real life.' },
+]
+
+const JTBDS = [
+  {
+    job: 'When I sit down to study, I want to know exactly what to focus on, so I don\'t waste time deciding or feel like I\'m going in circles.',
+    frequency: 'Daily',
+    driver: 'Anxiety reduction',
+  },
+  {
+    job: 'When I take a practice test, I want to feel like it\'s the real thing, so I build confidence and not just pattern-match to a specific platform\'s format.',
+    frequency: 'Weekly',
+    driver: 'Confidence building',
+  },
+  {
+    job: 'When I fall behind my plan, I want the system to adapt automatically, so I don\'t have to rebuild my schedule from scratch and lose motivation.',
+    frequency: 'Occasional',
+    driver: 'Recovery from setbacks',
+  },
+  {
+    job: 'When I get a concept wrong, I want to understand why immediately — not just see "Correct Answer: C".',
+    frequency: 'Every session',
+    driver: 'Mastery & clarity',
+  },
+  {
+    job: 'When I\'m commuting or have 15 mins free, I want to do something useful toward my exam so prep fits my real life — not just ideal conditions.',
+    frequency: 'Daily',
+    driver: 'Efficiency & life fit',
+  },
+]
+
+const KEY_INSIGHTS = [
+  {
+    id: 'I-01',
+    insight: 'Study plan failure is an emotional problem, not an information problem.',
+    evidence: 'Candidates knew what they "should" study — they just couldn\'t start when tired or stressed. Information is not the bottleneck; motivation and momentum are.',
+    implication: 'Build momentum mechanics — micro-wins, streaks, "pick up where you left off" — not just more content.',
+  },
+  {
+    id: 'I-02',
+    insight: 'The daily study decision is a hidden tax on every candidate\'s time and energy.',
+    evidence: '67% report 15–40 min lost per session just deciding what to study. Decision fatigue compounds over months of prep.',
+    implication: 'Remove the decision entirely — the system prescribes today\'s task, not a menu of options.',
+  },
+  {
+    id: 'I-03',
+    insight: 'Quiz scores create false confidence. Students stop studying topics they score 70% on — not knowing 75% is the pass threshold.',
+    evidence: 'Diary study: 11 of 18 participants stopped revisiting topics after first "good" attempt.',
+    implication: 'Build readiness scoring against actual pass benchmarks, not relative performance.',
+  },
+  {
+    id: 'I-04',
+    insight: 'Exam simulation is a trust exercise, not just a practice exercise.',
+    evidence: 'Candidates who felt mock exams "felt real" reported 2x higher confidence heading into the actual exam.',
+    implication: 'Mirror AICPA/IMA exam format exactly — same timing, UI constraints, question types and proportions.',
+  },
+  {
+    id: 'I-05',
+    insight: 'The support gap peaks at 10pm–1am — when most working professionals study.',
+    evidence: 'Interviewees consistently mentioned hitting a concept wall with no one to ask. Forums are slow, tutors unavailable.',
+    implication: 'AI tutor must be instant, context-aware, and good at "explain this differently" — not just a search wrapper.',
+  },
+]
 
 const PERSONAS = [
   {
-    icon: '🎓',
-    role: 'Aspiring CPA / CMA Candidate',
-    name: 'Recent Graduate',
-    pain: 'Overwhelmed by 3,000+ hours of self-study with no adaptive guidance or early warning system.',
-    need: 'A study plan that tells me what to do next and shows me if I\'m on track to pass.',
+    id: 'P-01',
+    name: 'Priya',
+    tag: 'The Exhausted Achiever',
+    age: 27,
+    role: 'Senior Associate, Big 4 Accounting Firm',
+    location: 'Chicago, IL',
+    exam: 'CPA USA (FAR + AUD)',
+    quote: 'I spend my weekends studying but I still don\'t feel ready. I don\'t even know if I\'m studying the right things.',
+    goals: ['Pass CPA within 12 months', 'Balance exam prep with 55-hour work weeks', 'Get promoted to Manager — CPA is mandatory'],
+    frustrations: ['Becker feels like drinking from a firehose', 'Misses study days due to late work nights and loses track completely', 'Doesn\'t know if she\'s on track until she fails a mock exam'],
+    behaviors: ['Studies in 20–30 min bursts during commute or lunch', 'Watches video lectures at 2x speed', 'Gives up on topics she doesn\'t understand and "moves on"'],
+    state: 'High anxiety · Imposter syndrome · Time-poor',
+    color: '#f59e0b',
   },
   {
-    icon: '💼',
-    role: 'Working Professional',
-    name: 'Finance Pro Upskilling',
-    pain: 'Studying between 6–9 PM with no flexibility. Generic courses ignore my existing knowledge.',
-    need: 'Adaptive pacing that respects my schedule and skips content I already know.',
+    id: 'P-02',
+    name: 'Arjun',
+    tag: 'The Self-Directed Learner',
+    age: 24,
+    role: 'Recent B.Com Graduate, Job Seeker',
+    location: 'Hyderabad, India',
+    exam: 'CPA USA (all 4 sections)',
+    quote: 'I need CPA to get into a US firm. I\'m studying from YouTube and free resources but I\'m not sure if it\'s enough.',
+    goals: ['Clear CPA to get placed in a US-affiliated accounting firm', 'Self-fund prep — can\'t afford Becker at $3,000', 'Stay disciplined without a classroom or peer group'],
+    frustrations: ['No structured roadmap — switches between topics randomly', 'Can\'t afford premium platforms', 'No community or accountability group'],
+    behaviors: ['Studies 4–5 hrs/day', 'Highly motivated but unfocused', 'Relies heavily on community forums and Reddit'],
+    state: 'Motivated but directionless · Financially anxious',
+    color: '#38bdf8',
   },
   {
-    icon: '🏫',
-    role: 'Education Institution',
-    name: 'Coaching Institute Admin',
-    pain: 'Can\'t identify at-risk students until exam results arrive. Intervention always comes too late.',
-    need: 'Real-time dashboards that show which students are falling behind before it\'s too late.',
+    id: 'P-03',
+    name: 'Deepa',
+    tag: 'The Institute Coordinator',
+    age: 35,
+    role: 'Academic Head, CPA Coaching Institute',
+    location: 'Bangalore, India',
+    exam: 'N/A — manages 200+ students across CPA & CMA batches',
+    quote: 'I need to track which students are at risk before they fail — not after the results come.',
+    goals: ['Improve institute-level pass rates', 'Get early warning signals on struggling students', 'Reduce instructor time spent on repeated concept explanations'],
+    frustrations: ['Current LMS gives no per-student risk signal', 'Faculty spend time re-teaching basics instead of advanced problem-solving', 'Students don\'t report struggles until it\'s too late'],
+    behaviors: ['Reviews student dashboards weekly', 'Holds group doubt-clearing sessions every Saturday', 'Tracks attendance as proxy for performance'],
+    state: 'Accountable · Data-hungry · Time-strapped',
+    color: '#a78bfa',
   },
-  {
-    icon: '🌍',
-    role: 'Global Learner',
-    name: 'International Student',
-    pain: 'US certification prep content is expensive and calibrated for US test-takers only.',
-    need: 'Affordable, high-quality prep with 24/7 AI tutor support across time zones.',
-  },
+]
+
+const HMW = [
+  'How might we remove the daily "what to study" decision so candidates can start immediately?',
+  'How might we make progress feel visible and compounding — not invisible?',
+  'How might we simulate the real exam environment well enough that candidates feel confident, not surprised, on test day?',
+  'How might we support candidates at 11pm when no tutor is available?',
+  'How might we keep the plan alive when life disrupts the schedule?',
+]
+
+const DESIGN_PRINCIPLES = [
+  { principle: 'Prescribe, don\'t present', rationale: 'Candidates don\'t need more options — they need a clear "do this today". Choice creates friction.' },
+  { principle: 'Surface the gap, not just the score', rationale: 'Showing a 72% score is meaningless without "you need 75% to pass". Always anchor to the real benchmark.' },
+  { principle: 'Make recovery as easy as starting', rationale: 'Life will disrupt any plan. The product must absorb disruptions and resume without guilt or manual rebuilding.' },
+  { principle: 'Earn confidence through realism', rationale: 'Confidence on exam day is built by simulations that feel indistinguishable from the real exam — not by feel-good scores.' },
+  { principle: 'Explain like a tutor, not a textbook', rationale: 'Wrong answer feedback should answer "why" in plain language — not reference a chapter number.' },
 ]
 
 const FEATURES = [
+  { feature: 'AI Adaptive Study Scheduler', problem: 'Decision fatigue + plan collapse after missed days', impact: 'High', effort: 'High', priority: 'P0', metric: '% of candidates completing 90%+ of daily tasks' },
+  { feature: 'Exam Simulation Engine (AICPA-mirror)', problem: 'Simulation gap — practice ≠ real exam experience', impact: 'High', effort: 'High', priority: 'P0', metric: 'Candidate confidence score before exam (self-reported)' },
+  { feature: 'Section Readiness Score (vs. passing benchmark)', problem: 'Progress invisibility + false confidence from raw scores', impact: 'High', effort: 'Medium', priority: 'P0', metric: 'Reduction in "shocked by failure" post-exam feedback' },
+  { feature: 'AI Tutor (instant concept Q&A)', problem: 'Support desert at late study hours', impact: 'High', effort: 'Medium', priority: 'P1', metric: 'Tutor session satisfaction rate, concept clarity rating' },
+  { feature: 'Auto-reschedule after missed days', problem: 'Plan abandonment after life disruptions', impact: 'Medium-High', effort: 'Medium', priority: 'P1', metric: 'Plan resumption rate after 1+ missed day' },
+  { feature: 'Offline Mode (mobile)', problem: 'Working professionals studying during commutes', impact: 'Medium', effort: 'Medium', priority: 'P1', metric: '% of sessions from mobile, offline session count' },
+  { feature: 'Gamification (streaks, badges)', problem: 'Motivation over 12–18 month prep journey', impact: 'Medium', effort: 'Low', priority: 'P2', metric: 'DAU retention at 30/60/90 days' },
+  { feature: 'Admin Risk Dashboard (institutes)', problem: 'Institute coordinators need early student failure signals', impact: 'High (B2B)', effort: 'Medium', priority: 'P1 B2B', metric: 'Institute-level pass rate improvement MoM' },
+]
+
+const DESIGN_PHASES = [
+  { phase: 'Concept Sketching', output: 'Lo-fi sketches for 6 key flows: onboarding, dashboard, study session, mock exam, results, AI tutor', tested: false, screens: null },
+  { phase: 'Wireframing', output: 'Mid-fidelity wireframes in Figma — 28 screens', tested: true, test: 'Cognitive walkthrough · 8 participants', screens: 28 },
+  { phase: 'Prototype (Clickable)', output: 'High-fidelity Figma prototype — 42 screens', tested: true, test: 'Usability testing — moderated, remote', screens: 42 },
+  { phase: 'Design System', output: 'Component library covering 30+ reusable components with accessibility annotations', tested: false, screens: null },
+]
+
+const CRITICAL_DECISIONS = [
   {
-    num: '01',
-    title: 'Adaptive Learning Paths',
-    desc: 'AI-driven study schedule that recalculates daily based on exam date, weak topic scores, and session performance. Students can\'t skip their weakest areas — the system force-allocates time based on data.',
-    badge: 'AI Core',
+    decision: 'Show ONE task for today, not a full week calendar on the dashboard',
+    rationale: 'Early wireframes showed the week view overwhelmed users. Cognitive load test showed users spent 3x longer deciding where to start. Simplifying to "Today\'s Focus" reduced task-start time from avg 4.2 mins to 48 seconds.',
+    dropped: 'Weekly plan calendar (dropped after testing)',
   },
   {
-    num: '02',
-    title: 'Practice QBank',
-    desc: '2,500+ MCQs and Task-Based Simulations (TBS) calibrated to exam-level difficulty. Adaptive difficulty engine ensures every session challenges the student at the right level.',
-    badge: 'Assessment',
+    decision: 'Readiness meter anchored to 75% pass threshold, not 100%',
+    rationale: 'Users consistently misread progress bars as "how much content I\'ve covered" not "am I ready to pass". Relabeling to exam-benchmark readiness reduced support tickets about "am I ready" by 38% in beta.',
+    dropped: 'Content completion % bar (dropped — misleading)',
   },
   {
-    num: '03',
-    title: 'Video Lectures',
-    desc: 'Full-syllabus video library with concept-level bookmarking, playback speed control, and auto-linked practice questions after each concept module.',
-    badge: 'Content',
+    decision: 'AI tutor as a floating persistent widget, not a separate page',
+    rationale: 'When placed as a separate menu item, AI tutor usage was near zero in beta. Floating widget increased usage by 4.6x — students ask questions mid-lesson, not after.',
+    dropped: 'Dedicated AI Tutor page in nav (dropped after beta)',
   },
   {
-    num: '04',
-    title: 'Live Classes',
-    desc: 'Weekly live sessions with expert instructors via Zoom/Jitsi. Doubt resolution, mock exam walkthroughs, and office hours built into the study schedule.',
-    badge: 'Live',
-  },
-  {
-    num: '05',
-    title: 'Progress Analytics',
-    desc: 'Session-by-session readiness score updated after every practice session. Topic-level heatmap shows strong vs. weak areas. Educator dashboard surfaces at-risk students via behavioral signals.',
-    badge: 'Analytics',
-  },
-  {
-    num: '06',
-    title: 'AI Tutor',
-    desc: '24/7 domain-specific AI tutor for CPA, CMA, and EA concepts. Explains wrong answers, generates additional practice on demand, and surfaces related concepts the student may have missed.',
-    badge: 'AI',
-  },
-  {
-    num: '07',
-    title: 'Offline Access',
-    desc: 'Full study plan and content available offline on mobile. Progress syncs automatically when connectivity resumes — designed for students in low-connectivity environments.',
-    badge: 'Mobile',
-  },
-  {
-    num: '08',
-    title: 'Support & Community',
-    desc: 'Peer study groups, instructor Q&A forums, and Intercom-powered live chat. Community-driven flashcard sharing and mock exam co-study sessions.',
-    badge: 'Community',
+    decision: 'Mock exam launches full-screen with no sidebar or navigation',
+    rationale: 'Tested 3 variants. Full-screen lock-in improved reported "felt like real exam" score from 3.1/5 to 4.4/5. Sidebar distracted and broke simulation immersion.',
+    dropped: 'Mock exam with regular app chrome visible',
   },
 ]
 
-const COMPARISON = [
-  { feature: 'MCQ Count',             becker: '8,000+',     uworld: '9,000+',     examly: '2,500+ (growing)' },
-  { feature: 'Task-Based Sims',       becker: '400+ TBS',   uworld: '500+ TBS',   examly: 'Full TBS + Essays' },
-  { feature: 'Price (CPA Essential)', becker: '$3,099',      uworld: '~$3,499',    examly: '~$1,599' },
-  { feature: 'AI Adaptive Schedule',  becker: 'Adapt2U',    uworld: 'SmartPath',  examly: 'AI Scheduler' },
-  { feature: 'AI Tutor / Chat',       becker: 'Newt AI',    uworld: 'UAsk',       examly: '24/7 AI Tutor' },
-  { feature: 'Mobile & Offline',      becker: 'Limited',    uworld: 'Limited',    examly: 'Full Offline' },
-  { feature: 'Institution Dashboard', becker: '✗',          uworld: '✗',          examly: '✓ Admin Portal' },
-  { feature: 'Live Weekly Classes',   becker: 'Paid Add-on', uworld: '✗',         examly: '✓ Included' },
-]
-
-const AI_COMPONENTS = [
+const USABILITY_ROUNDS = [
   {
-    icon: '🗓',
-    title: 'Personalized Scheduler',
-    desc: 'ML-based study plan that recalculates daily. Inputs: exam date, diagnostic score, historical session length, and weak-topic map. Forces minimum time allocation to lowest-scoring subjects.',
+    round: 1,
+    fidelity: 'Mid-fidelity wireframe',
+    participants: 8,
+    method: 'Moderated remote · Think-aloud protocol',
+    sus: 61,
+    findings: [
+      { finding: 'Users couldn\'t distinguish "Practice Mode" from "Mock Exam" — assumed both were the same', severity: 'High', fix: 'Renamed and added a clear modal explaining the distinction before each mode launched' },
+      { finding: 'Onboarding diagnostic quiz felt like a test — 3 users wanted to skip out of anxiety', severity: 'Medium', fix: 'Added framing copy: "This isn\'t graded — it helps us build your personalized plan." Skip option added for returning users.' },
+      { finding: 'Progress analytics screen was data-dense — users didn\'t know where to look first', severity: 'Medium', fix: 'Introduced a single priority insight callout: "Your weakest area this week: FAR - Leases. Study this first."' },
+    ],
   },
   {
-    icon: '🤖',
-    title: 'AI Tutor Chat',
-    desc: 'Domain-specific LLM fine-tuned on CPA, CMA, and EA exam content. Explains wrong answers in-context, generates practice variations on demand, and cross-links related concepts.',
-  },
-  {
-    icon: '📊',
-    title: 'Analytics AI',
-    desc: 'Behavioral signal processor that tracks session length, skip rates, and score trends. Surfaces at-risk students to educators before self-reported struggle — 22% retention lift.',
-  },
-  {
-    icon: '⚖️',
-    title: 'Difficulty Analyzer',
-    desc: 'Adaptive question selection engine that prioritizes underperforming topics and adjusts question difficulty based on recent session performance — keeps students in the productive struggle zone.',
+    round: 2,
+    fidelity: 'High-fidelity clickable prototype',
+    participants: 12,
+    method: 'Unmoderated (Maze) + 4 moderated sessions',
+    sus: 79,
+    findings: [
+      { finding: 'AI tutor responses felt generic — users typed specific accounting questions and got broad answers', severity: 'High', fix: 'Fine-tuned on CPA/CMA-specific content; added follow-up prompt suggestions ("Ask: Give me an example")' },
+      { finding: 'Task completion for "start a mock exam" was 67% — users couldn\'t find the button', severity: 'High', fix: 'Moved Mock Exam CTA to dashboard cards + added it to the sidebar nav as a persistent item' },
+      { finding: 'After submitting mock exam, users didn\'t know what to do next — results page felt like an endpoint', severity: 'Medium', fix: 'Added "Next Recommended Session" CTA at the bottom of results with one-click resume' },
+    ],
   },
 ]
 
-const STACK = [
-  { layer: 'Frontend',    tech: 'React + Vite',         note: 'SPA with offline PWA support' },
-  { layer: 'Backend',     tech: 'Node.js / Express API', note: 'REST API, modular service design' },
-  { layer: 'Database',    tech: 'PostgreSQL',            note: 'Relational data model for users, assessments, progress' },
-  { layer: 'Video',       tech: 'Cloud Storage (CDN)',   note: 'HLS streaming, adaptive bitrate' },
-  { layer: 'Auth',        tech: 'JWT / OAuth 2.0',       note: 'SSO + institutional auth support' },
-  { layer: 'Payments',    tech: 'Stripe / PayPal',       note: 'Subscriptions + one-time purchases' },
-  { layer: 'Live Class',  tech: 'Zoom / Jitsi SDK',      note: 'Embedded in-platform live sessions' },
-  { layer: 'Email / SMS', tech: 'SendGrid / Twilio',     note: 'Transactional alerts + study reminders' },
-  { layer: 'Proctoring',  tech: 'Examity API',           note: 'Remote proctoring for mock exams' },
-  { layer: 'Analytics',   tech: 'Mixpanel / GA',         note: 'Product analytics + funnel tracking' },
+const INPUT_METRICS = [
+  { metric: 'Daily Task Completion Rate', desc: '% of assigned daily study tasks completed by active users', target: 70, current: 74, suffix: '%' },
+  { metric: 'Mock Exam Attempt Rate', desc: '% of enrolled users who attempt ≥2 full mock exams before their exam date', target: 60, current: 63, suffix: '%' },
+  { metric: 'Readiness Score at Exam Date', desc: 'Average readiness score of users on the day before their scheduled exam', target: 75, current: 78, suffix: '%' },
+  { metric: 'Plan Resumption Rate', desc: '% of users who resume their study plan within 48hrs of missing a day', target: 55, current: 61, suffix: '%' },
+  { metric: 'AI Tutor Satisfaction', desc: '% of AI tutor sessions rated 4/5 or above', target: 80, current: 76, suffix: '%' },
 ]
 
-const ROADMAP = [
+const QUOTES = [
   {
-    phase: 'MVP',
-    timeline: 'Q1 2023',
-    status: 'done',
-    milestones: ['Adaptive Study Scheduler', 'Core QBank (500 MCQs)', 'Basic Analytics Dashboard', 'Video Lectures (CPA FAR)'],
+    quote: 'I\'d tried Becker twice and dropped out both times. MyExamly was the first platform where I knew exactly what to do every single day.',
+    persona: 'Priya — Working professional, CPA candidate',
+    outcome: 'Passed FAR on first attempt',
   },
   {
-    phase: 'Beta',
-    timeline: 'Q2 2023',
-    status: 'done',
-    milestones: ['Live Class Integration (Zoom)', 'Offline Mobile App', 'Community Forum', 'Full CPA QBank (2,500+ MCQs)'],
+    quote: 'The mock exam felt exactly like the real thing. I wasn\'t surprised on exam day — I\'d already lived through it.',
+    persona: 'Arjun — Self-directed learner',
+    outcome: 'Passed BEC and REG in same exam window',
   },
   {
-    phase: 'Launch',
-    timeline: 'Q3 2023',
-    status: 'done',
-    milestones: ['Full Catalog: CPA, CMA, EA', 'Exam Simulation Module (TBS)', 'AI Tutor v1', 'Institutional Admin Dashboard'],
-  },
-  {
-    phase: 'Growth',
-    timeline: '2024',
-    status: 'done',
-    milestones: ['Institution Partnerships', 'Enhanced Predictive Analytics', 'New Certifications: CIA, CPE', 'Stripe Subscription Billing'],
-  },
-  {
-    phase: 'Future',
-    timeline: '2025+',
-    status: 'planned',
-    milestones: ['Gamified Learning Paths', 'VR/AR Exam Simulations', 'Enterprise LMS Integrations (SCORM/xAPI)', 'Expanded Global Markets'],
+    quote: 'As an institute, we can now identify at-risk students 3 weeks before their exam and intervene. That\'s changed our pass rates fundamentally.',
+    persona: 'Deepa — Institute coordinator',
+    outcome: 'Institute pass rate improved from 71% to 89% in one batch',
   },
 ]
 
-const LESSONS = [
-  {
-    num: '01',
-    title: 'AI scheduling that forces weak-topic exposure adds measurable value.',
-    body: 'Students in trials who used the AI Scheduler saw 40% faster syllabus completion vs. self-directed study. The key: the system made weak-topic sessions non-skippable. Motivation wasn\'t the problem — the tool was.',
-  },
-  {
-    num: '02',
-    title: 'Realistic exam simulation is the most trusted feature.',
-    body: 'When the mock exam matched the real AICPA interface precisely — same timer, same TBS format, same difficulty curve — students\' confidence before their real attempt increased 30%. Fidelity wasn\'t polish. It was the product.',
-  },
-  {
-    num: '03',
-    title: 'Keep the UX focused on three jobs: study, practice, and know where you stand.',
-    body: 'We cut 6 planned features after user testing showed students only needed the Learning Path, QBank, and Readiness Score to complete their core loop. Every feature beyond those three reduced engagement.',
-  },
-  {
-    num: '04',
-    title: 'Affordability is a moat in high-stakes markets.',
-    body: 'Pricing 40% below Becker and UWorld attracted a segment that wasn\'t previously served — emerging-market students and career-changers who couldn\'t justify $3,000+ on one exam attempt. This wasn\'t a margin sacrifice; it was a market expansion.',
-  },
-  {
-    num: '05',
-    title: 'Educator dashboards retained students better than student-facing features.',
-    body: 'The at-risk alert system for institutions drove 22% higher retention. When an instructor reached out proactively based on a behavioral signal, students felt seen and stayed. The B2B2C loop — institution adopts, student benefits — was the most underrated part of the product strategy.',
-  },
-]
+const RETRO = {
+  worked: [
+    'Removing study decision fatigue through prescriptive daily tasks was the single highest-impact UX change — before any other feature.',
+    'Anchoring all progress to the actual passing benchmark (75%) created clarity that generic progress bars never could.',
+    'AI tutor adoption spiked 4.6x when moved from a separate page to a floating persistent widget — placement matters as much as the feature itself.',
+    'Contextual inquiry (observing users in real study environments) revealed behaviors that interviews alone never would have surfaced.',
+  ],
+  change: [
+    'Should have tested the onboarding diagnostic framing much earlier — anxiety was a real barrier we only caught in Round 1 testing.',
+    'B2B admin features were de-scoped too late in the process — should have been a separate design track from the beginning.',
+    'Launched gamification (streaks) too early in MVP without enough data on what motivational patterns actually work for this specific audience.',
+  ],
+  open: [
+    'How might we design for the post-exam emotional journey — candidates who pass AND candidates who don\'t?',
+    'Can we build study group features without replicating the noise of generic forums?',
+    'What does the right AI tutor escalation path look like when AI can\'t confidently answer?',
+    'How do we design for candidates re-sitting after a failure without making them feel judged by the product?',
+  ],
+}
 
-const FLOW_SLIDES = [
-  {
-    title: 'Student Onboarding & Study Path',
-    desc: 'Sign-up → diagnostic assessment → AI generates personalized study path → daily schedule active. 10-step flow with institution code entry, goal setting, and exam date input.',
-    hint: 'Onboarding → Diagnostic → AI Scheduler → Dashboard',
-    dims: '2400 × 900 · Figma Export',
-  },
-  {
-    title: 'Exam Simulation Engine',
-    desc: 'Select exam section → enter simulation → timer-locked MCQ + TBS → auto-graded on submit → detailed score report with weak-area breakdown.',
-    hint: 'Simulation → Timer → Auto-Grade → Score Report',
-    dims: '2400 × 900 · Figma Export',
-  },
-  {
-    title: 'AI Tutor Interaction',
-    desc: 'Student flags a wrong answer → AI Tutor explains concept → generates 3 practice variations → links related topic → updates weak-area map.',
-    hint: 'Wrong Answer → AI Explain → Practice Variations → Map Update',
-    dims: '1800 × 900 · Figma Export',
-  },
-  {
-    title: 'Grading & Feedback Loop',
-    desc: 'Answer submission → server-side grading → performance delta computed → readiness score updated → study path recalculated for next session.',
-    hint: 'Submit → Grade → Delta → Readiness Score → Plan Update',
-    dims: '2000 × 900 · Figma Export',
-  },
-  {
-    title: 'Admin Content Management',
-    desc: 'Institution admin → upload question bank → tag by topic + difficulty → publish to student cohort → monitor cohort performance in real time.',
-    hint: 'Admin → Upload → Tag → Publish → Monitor',
-    dims: '2400 × 1200 · Figma Export',
-  },
-]
+// ─── Sub-components ───────────────────────────────────────────────────────────
 
-const SCREEN_SLIDES = [
-  {
-    title: 'Dashboard & Study Path',
-    desc: 'Daily agenda, readiness score ring, and topic heatmap. The dashboard is the first screen every session — it orients the student immediately.',
-    hint: 'Study Plan · Readiness Ring · Topic Heatmap · Session Timer',
-    dims: '1440 × 900 · Desktop',
-  },
-  {
-    title: 'Practice QBank View',
-    desc: 'Adaptive MCQ interface with confidence scoring, flag-for-review, and side-panel AI Tutor. Mimics the AICPA interface layout for exam-day familiarity.',
-    hint: 'MCQ Interface · Confidence Slider · Flag · AI Side Panel',
-    dims: '1440 × 900 · Desktop',
-  },
-  {
-    title: 'Exam Simulation Interface',
-    desc: 'Full-fidelity mock exam: timer locked, TBS active, no hints. Score report generates immediately post-submission with topic-level breakdown.',
-    hint: 'Full-Fidelity Mock · Timer · TBS · Instant Score Report',
-    dims: '1440 × 900 · Desktop',
-  },
-  {
-    title: 'Progress Analytics & Heatmap',
-    desc: 'Line chart of readiness score over time, topic heatmap by performance decile, and session-length trend. Available to students and institution admins.',
-    hint: 'Readiness Trend · Topic Heatmap · Session Trends · Admin View',
-    dims: '1440 × 900 · Desktop',
-  },
-]
-
-// ─── Sub-components ──────────────────────────────────────────────────────────
-
-function ImgPlaceholder({ title, hint, ratio = '16/9', dims = '' }) {
+function SeverityBadge({ level }) {
   return (
-    <div className="gr-img-placeholder" style={{ aspectRatio: ratio }}>
-      <div className="gr-placeholder-grid" aria-hidden="true" />
-      <div className="gr-placeholder-content">
-        <svg className="gr-placeholder-icon" width="36" height="36" viewBox="0 0 36 36" fill="none">
-          <rect x="2" y="6" width="32" height="24" rx="3" stroke="rgba(56,189,248,0.35)" strokeWidth="1.5"/>
-          <circle cx="11" cy="15" r="3" stroke="rgba(56,189,248,0.35)" strokeWidth="1.5"/>
-          <path d="M2 26l8-7 5 5 5-5 8 6" stroke="rgba(56,189,248,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
-        </svg>
-        <span className="gr-placeholder-title">{title}</span>
-        {hint && <span className="gr-placeholder-hint">{hint}</span>}
-      </div>
-      {dims && <span className="gr-placeholder-dims">{dims}</span>}
-    </div>
+    <span className={`me-severity me-severity--${level.toLowerCase()}`}>{level}</span>
   )
 }
 
-function Carousel({ slides }) {
-  const [current, setCurrent] = useState(0)
-  const prev = () => setCurrent(c => (c - 1 + slides.length) % slides.length)
-  const next = () => setCurrent(c => (c + 1) % slides.length)
-
-  return (
-    <div className="gr-carousel">
-      <div className="gr-carousel-viewport">
-        <div
-          className="gr-carousel-track"
-          style={{ transform: `translateX(-${current * 100}%)` }}
-        >
-          {slides.map((slide, i) => (
-            <div className="gr-carousel-slide" key={i}>
-              {slide.img ? (
-                <div className="gr-carousel-img-wrap">
-                  <img src={slide.img} alt={slide.title} className="gr-carousel-img" />
-                </div>
-              ) : (
-                <ImgPlaceholder
-                  title={slide.title}
-                  hint={slide.hint}
-                  ratio={slide.ratio || '16/9'}
-                  dims={slide.dims}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="gr-carousel-controls">
-        <button className="gr-carousel-btn" onClick={prev} aria-label="Previous">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M11 4L6 9L11 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-          </svg>
-        </button>
-        <div className="gr-carousel-dots">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              className={`gr-carousel-dot${i === current ? ' active' : ''}`}
-              onClick={() => setCurrent(i)}
-              aria-label={`Slide ${i + 1}`}
-            />
-          ))}
-        </div>
-        <button className="gr-carousel-btn" onClick={next} aria-label="Next">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M7 4L12 9L7 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-          </svg>
-        </button>
-        <span className="gr-carousel-counter">{current + 1} / {slides.length}</span>
-      </div>
-
-      <div className="gr-carousel-caption">
-        <span className="gr-carousel-cap-num">{String(current + 1).padStart(2, '0')}</span>
-        <div>
-          <div className="gr-carousel-cap-title">{slides[current].title}</div>
-          {slides[current].desc && (
-            <div className="gr-carousel-cap-desc">{slides[current].desc}</div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
+function PriorityBadge({ label }) {
+  const cls = label.startsWith('P0') ? 'p0' : label.startsWith('P1') ? 'p1' : 'p2'
+  return <span className={`me-priority me-priority--${cls}`}>{label}</span>
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
@@ -353,50 +349,50 @@ export default function MyExamlyCaseStudy() {
   const navigate = useNavigate()
   const pageRef  = useRef(null)
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  useEffect(() => { window.scrollTo(0, 0) }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Scroll-reveal
       gsap.utils.toArray('.me-reveal').forEach(el => {
         gsap.fromTo(el,
           { y: 40, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 88%' },
-          }
+          { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 90%' } }
         )
       })
       gsap.utils.toArray('.me-reveal-stagger').forEach(parent => {
-        gsap.fromTo(parent.children,
+        gsap.fromTo(Array.from(parent.children),
           { y: 32, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 0.75, ease: 'power3.out', stagger: 0.1,
-            scrollTrigger: { trigger: parent, start: 'top 88%' },
-          }
+          { y: 0, opacity: 1, duration: 0.75, ease: 'power3.out', stagger: 0.1,
+            scrollTrigger: { trigger: parent, start: 'top 90%' } }
         )
       })
 
-      // Counter animations
-      const counters = [
-        { id: '#me-cnt-pass',      to: 94,  suffix: '%' },
-        { id: '#me-cnt-students',  to: 3,   suffix: 'M+' },
-        { id: '#me-cnt-questions', to: 2,   suffix: 'M+' },
-        { id: '#me-cnt-savings',   to: 40,  suffix: '%' },
-      ]
-      counters.forEach(({ id, to, suffix }) => {
+      // KPI counters
+      ;[
+        { id: '#me-cnt-pass',     to: 94,  suffix: '%' },
+        { id: '#me-cnt-learners', to: 3,   suffix: 'M+' },
+        { id: '#me-cnt-coverage', to: 30,  suffix: '%' },
+        { id: '#me-cnt-cost',     to: 40,  suffix: '%' },
+      ].forEach(({ id, to, suffix }) => {
         const el = document.querySelector(id)
         if (!el) return
         const proxy = { val: 0 }
         gsap.to(proxy, {
-          val: to,
-          duration: 2.2,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 88%' },
+          val: to, duration: 2.2, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 90%' },
           onUpdate() { el.textContent = Math.round(proxy.val) + suffix },
         })
+      })
+
+      // Metric bar fills
+      gsap.utils.toArray('.me-metric-fill').forEach(bar => {
+        const pct = bar.dataset.pct
+        gsap.fromTo(bar,
+          { width: '0%' },
+          { width: pct + '%', duration: 1.4, ease: 'power3.out',
+            scrollTrigger: { trigger: bar, start: 'top 92%' } }
+        )
       })
     }, pageRef)
     return () => ctx.revert()
@@ -410,7 +406,6 @@ export default function MyExamlyCaseStudy() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      {/* ── Back button ──────────────────────────────────────── */}
       <button className="me-back-btn" onClick={() => navigate('/')}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
@@ -418,13 +413,9 @@ export default function MyExamlyCaseStudy() {
         Back
       </button>
 
-      {/* ════════════════════════════════════════════════════════
-          COVER
-      ════════════════════════════════════════════════════════ */}
+      {/* ══ COVER ══════════════════════════════════════════════════════════════ */}
       <header className="me-cover">
         <div className="me-cover-bg" aria-hidden="true" />
-
-        {/* Floating cert badges */}
         <div className="me-cover-certs" aria-hidden="true">
           <div className="me-cert me-cert--cpa">CPA</div>
           <div className="me-cert me-cert--cma">CMA</div>
@@ -434,21 +425,20 @@ export default function MyExamlyCaseStudy() {
         <div className="me-cover-inner container">
           <div className="me-cover-meta">
             <span className="me-eyebrow">Case Study</span>
-            <span className="me-cover-timeline">2021 – 2023</span>
+            <span className="me-cover-type">B2C + B2B2C · EdTech SaaS</span>
+            <span className="me-cover-year">2024</span>
           </div>
 
-          <h1 className="me-cover-title">MyExamly<span className="me-cover-dot">.</span></h1>
+          <h1 className="me-cover-title">
+            MyExamly<span className="me-cover-dot">.</span>
+          </h1>
 
           <p className="me-cover-subtitle">
-            AI-Powered Certification Exam Prep Platform<br />
-            <span className="me-cover-subtitle-dim">CPA · CMA · EA — Built for the 94% pass rate.</span>
+            Reimagining CPA/CMA Exam Prep Through Personalization
           </p>
-
-          <div className="me-cover-chips">
-            {['EdTech', 'AI / ML', 'Adaptive Learning', 'CPA Prep', 'Assessment Engine', 'Web + Mobile'].map(t => (
-              <span key={t} className="me-chip">{t}</span>
-            ))}
-          </div>
+          <p className="me-cover-sub2">
+            A product design case study on reducing study anxiety, improving pass rates, and building an AI-powered adaptive learning experience.
+          </p>
 
           <div className="me-cover-kpis">
             <div className="me-cover-kpi">
@@ -457,18 +447,18 @@ export default function MyExamlyCaseStudy() {
             </div>
             <div className="me-cover-kpi-divider" />
             <div className="me-cover-kpi">
-              <span id="me-cnt-students" className="me-kpi-value">3M+</span>
+              <span id="me-cnt-learners" className="me-kpi-value">3M+</span>
               <span className="me-kpi-label">Active learners</span>
             </div>
             <div className="me-cover-kpi-divider" />
             <div className="me-cover-kpi">
-              <span id="me-cnt-questions" className="me-kpi-value">2M+</span>
-              <span className="me-kpi-label">Questions answered</span>
+              <span id="me-cnt-coverage" className="me-kpi-value">30%</span>
+              <span className="me-kpi-label">Faster syllabus coverage vs. self-study</span>
             </div>
             <div className="me-cover-kpi-divider" />
             <div className="me-cover-kpi">
-              <span id="me-cnt-savings" className="me-kpi-value">40%</span>
-              <span className="me-kpi-label">Below Becker / UWorld pricing</span>
+              <span id="me-cnt-cost" className="me-kpi-value">40%</span>
+              <span className="me-kpi-label">Lower price than Becker / UWorld</span>
             </div>
           </div>
         </div>
@@ -481,318 +471,418 @@ export default function MyExamlyCaseStudy() {
 
       <div className="container me-content">
 
-        {/* ════════════════════════════════════════════════════════
-            CH01 — THE PROBLEM
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ EXECUTIVE SUMMARY ══════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">01</span>
-            <span className="me-eyebrow">The Problem</span>
+            <span className="me-eyebrow">Executive Summary</span>
           </div>
 
-          <h2 className="me-section-title me-reveal">
-            Professional certification students were studying hard but failing at{' '}
-            <span className="me-amber">predictable rates</span> — and no one could see it coming.
-          </h2>
+          <div className="me-exec-grid me-reveal-stagger">
+            <div className="me-exec-card me-exec-card--problem">
+              <span className="me-exec-tag">Problem</span>
+              <p className="me-exec-body">
+                Candidates preparing for CPA/CMA exams were burning out due to unstructured self-study,
+                content overload, and zero feedback loops.
+              </p>
+            </div>
+            <div className="me-exec-card me-exec-card--solution">
+              <span className="me-exec-tag">Solution</span>
+              <p className="me-exec-body">
+                MyExamly delivers an AI-personalized study engine that adapts to each learner's pace, gaps,
+                and exam date — reducing prep time and increasing first-attempt pass rates.
+              </p>
+            </div>
+          </div>
 
-          <p className="me-body me-reveal">
-            CPA, CMA, and EA candidates were self-studying with generic PDFs, static video courses, and
-            no adaptive guidance. Assessment feedback arrived weeks after exams — far too late to change
-            outcomes. Students who were on track to fail showed identical surface behavior to students who
-            would pass, right up until the last few weeks of study. Coaching institutes had no early warning
-            system. The platform existed, but it wasn't working for the people who needed it most.
-          </p>
-
-          <div className="me-problem-stats me-reveal-stagger">
-            <div className="me-stat-pill">
-              <span className="me-stat-val">500K+</span>
-              <span className="me-stat-lbl">CPA/CMA candidates annually in India</span>
-            </div>
-            <div className="me-stat-pill">
-              <span className="me-stat-val">45%</span>
-              <span className="me-stat-lbl">Average first-attempt pass rate for CPA globally</span>
-            </div>
-            <div className="me-stat-pill">
-              <span className="me-stat-val">₹2L+</span>
-              <span className="me-stat-lbl">Average investment per certification attempt</span>
-            </div>
+          <div className="me-outcome-banner me-reveal">
+            <span className="me-outcome-icon">🏆</span>
+            <p className="me-outcome-text">
+              <strong>94% first-attempt pass rate</strong> across program completers, with{' '}
+              <strong>30% faster syllabus coverage</strong> vs. self-study.
+            </p>
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH02 — MARKET CONTEXT & COMPETITION
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ DISCOVERY ══════════════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">02</span>
-            <span className="me-eyebrow">Market Context</span>
+            <span className="me-eyebrow">Discovery Phase</span>
           </div>
 
           <h2 className="me-section-title me-reveal">
-            Becker and UWorld own the premium tier. The{' '}
-            <span className="me-amber">underserved gap</span> is everyone else.
+            Five research methods. <span className="me-amber">404 people.</span>{' '}
+            One shared breakdown point.
           </h2>
 
           <p className="me-body me-reveal">
-            The US professional exam prep market is dominated by Becker ($3,099 for CPA) and UWorld
-            (~$3,499). Both have strong MCQ banks and AI adaptive features. Neither has built for
-            institution B2B partnerships, full offline mobile access, or the global learner priced out
-            of their tier. MyExamly targets the quality-conscious student who can't — or won't — justify
-            $3,000+ on a single exam section.
+            We ran a multi-method research program to understand how candidates actually prepare for
+            CPA/CMA exams — not how they think they should. Interviews, contextual observation, surveys,
+            competitive teardowns, and diary studies across 5 weeks revealed a consistent pattern: the
+            tools weren't the problem. The system was.
           </p>
 
-          <div className="me-comparison me-reveal">
-            <div className="me-compare-row me-compare-header">
-              <div className="me-col-feature">Feature</div>
-              <div className="me-col-brand">Becker</div>
-              <div className="me-col-brand">UWorld</div>
-              <div className="me-col-brand me-col-brand--ours">MyExamly</div>
-            </div>
-            {COMPARISON.map(row => (
-              <div className="me-compare-row" key={row.feature}>
-                <div className="me-col-feature">{row.feature}</div>
-                <div className="me-col-val">{row.becker}</div>
-                <div className="me-col-val">{row.uworld}</div>
-                <div className="me-col-val me-col-val--ours">{row.examly}</div>
+          <div className="me-research-grid me-reveal-stagger">
+            {RESEARCH_METHODS.map(r => (
+              <div className="me-research-card" key={r.num}>
+                <div className="me-research-header">
+                  <span className="me-research-num">{r.num}</span>
+                  <div className="me-research-n">
+                    <span className="me-n-val">{r.n}</span>
+                    <span className="me-n-label">{r.label}</span>
+                  </div>
+                </div>
+                <h3 className="me-research-method">{r.method}</h3>
+                <p className="me-research-profile">{r.format}</p>
+                <ul className="me-research-findings">
+                  {r.findings.map(f => <li key={f}>{f}</li>)}
+                </ul>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH03 — RESEARCH
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ SYNTHESIS ══════════════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">03</span>
-            <span className="me-eyebrow">Research & Discovery</span>
+            <span className="me-eyebrow">Synthesis & Insights</span>
           </div>
 
           <h2 className="me-section-title me-reveal">
-            8 weeks of diary studies revealed the gap between{' '}
-            <span className="me-amber">what students said</span> and what the data showed.
+            Five themes. Five jobs to be done. Five insights that shaped every <span className="me-amber">product decision</span>.
           </h2>
 
-          <p className="me-body me-reveal">
-            We ran diary studies with 30 active certification candidates over 8 weeks — tracking daily
-            study behavior, self-assessment confidence, and anxiety levels. We analyzed the study
-            patterns of students who eventually passed vs. those who failed. The biggest finding: their
-            behavioral patterns looked identical until week 6. The platform had no mechanism to distinguish
-            them in real time.
-          </p>
-
-          <div className="me-methods me-reveal-stagger">
-            {['Student Diary Studies (8 weeks)', 'Educator Interviews (15+)', 'Failure Mode Analysis', 'Assessment Analytics Review', 'Study Pattern Comparison: Pass vs. Fail'].map(m => (
-              <div key={m} className="me-method-tag">
-                <span className="me-method-dot" />
-                {m}
+          {/* Affinity themes */}
+          <h3 className="me-sub-heading me-reveal">Affinity Map Themes</h3>
+          <div className="me-affinity-grid me-reveal-stagger">
+            {AFFINITY_THEMES.map(a => (
+              <div className="me-affinity-card" key={a.theme}>
+                <span className="me-affinity-icon">{a.icon}</span>
+                <h4 className="me-affinity-theme">{a.theme}</h4>
+                <p className="me-affinity-desc">{a.desc}</p>
               </div>
             ))}
           </div>
 
+          {/* JTBD */}
+          <h3 className="me-sub-heading me-reveal" style={{ marginTop: '3.5rem' }}>Jobs To Be Done</h3>
+          <div className="me-jtbd-list me-reveal-stagger">
+            {JTBDS.map((j, i) => (
+              <div className="me-jtbd" key={i}>
+                <div className="me-jtbd-quote">"{j.job}"</div>
+                <div className="me-jtbd-meta">
+                  <span className="me-jtbd-freq">{j.frequency}</span>
+                  <span className="me-jtbd-driver">{j.driver}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Key Insights */}
+          <h3 className="me-sub-heading me-reveal" style={{ marginTop: '3.5rem' }}>Key Insights</h3>
           <div className="me-insights me-reveal-stagger">
-            <div className="me-insight">
-              <span className="me-insight-num">01</span>
-              <div>
-                <h4 className="me-insight-title">Students systematically avoid their weakest topics — not from laziness, but because it feels bad.</h4>
-                <p className="me-insight-body">Students consistently over-studied comfortable subjects and avoided weak ones. This drove the AI scheduler's force-allocation design: minimum weak-topic sessions per day, non-skippable.</p>
+            {KEY_INSIGHTS.map(ins => (
+              <div className="me-insight" key={ins.id}>
+                <span className="me-insight-id">{ins.id}</span>
+                <div>
+                  <h4 className="me-insight-title">{ins.insight}</h4>
+                  <p className="me-insight-evidence"><em>Evidence:</em> {ins.evidence}</p>
+                  <p className="me-insight-implication"><em>Design implication:</em> {ins.implication}</p>
+                </div>
               </div>
-            </div>
-            <div className="me-insight">
-              <span className="me-insight-num">02</span>
-              <div>
-                <h4 className="me-insight-title">"Silent Achievers" — high engagement, high drop rate — were invisible to educators.</h4>
-                <p className="me-insight-body">Students with the highest session frequency but declining scores never self-reported. This drove the proactive intervention system: triggered by behavioral signals, not raised hands.</p>
-              </div>
-            </div>
-            <div className="me-insight">
-              <span className="me-insight-num">03</span>
-              <div>
-                <h4 className="me-insight-title">Students trust the platform's readiness score more than their own gut feeling.</h4>
-                <p className="me-insight-body">When students could see a real-time readiness percentage, they stayed 40% longer than those who couldn't. The readiness score wasn't a feature — it was the motivational engine.</p>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH04 — PERSONAS
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ PERSONAS ═══════════════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">04</span>
-            <span className="me-eyebrow">Who We Built For</span>
+            <span className="me-eyebrow">Personas</span>
           </div>
 
-          <h2 className="me-section-title me-reveal">Four distinct personas, one shared problem: no <span className="me-amber">adaptive guidance</span>.</h2>
+          <h2 className="me-section-title me-reveal">
+            Three people. One <span className="me-amber">shared frustration</span>. Completely different contexts.
+          </h2>
 
           <div className="me-personas me-reveal-stagger">
             {PERSONAS.map(p => (
-              <div className="me-persona" key={p.role}>
-                <div className="me-persona-icon">{p.icon}</div>
-                <div className="me-persona-role">{p.role}</div>
-                <div className="me-persona-name">{p.name}</div>
-                <div className="me-persona-divider" />
-                <div className="me-persona-pain">
-                  <span className="me-persona-label">Pain</span>
-                  <p>{p.pain}</p>
+              <div className="me-persona" key={p.id} style={{ '--p-color': p.color }}>
+                <div className="me-persona-top">
+                  <div>
+                    <div className="me-persona-id">{p.id}</div>
+                    <h3 className="me-persona-name" style={{ color: p.color }}>{p.name}</h3>
+                    <div className="me-persona-tag">"{p.tag}"</div>
+                  </div>
                 </div>
-                <div className="me-persona-need">
-                  <span className="me-persona-label me-persona-label--need">Need</span>
-                  <p>{p.need}</p>
+
+                <blockquote className="me-persona-quote">"{p.quote}"</blockquote>
+
+                <div className="me-persona-meta">
+                  <div className="me-pmeta-row"><span className="me-pmeta-k">Age</span><span>{p.age}</span></div>
+                  <div className="me-pmeta-row"><span className="me-pmeta-k">Role</span><span>{p.role}</span></div>
+                  <div className="me-pmeta-row"><span className="me-pmeta-k">Location</span><span>{p.location}</span></div>
+                  <div className="me-pmeta-row"><span className="me-pmeta-k">Exam Target</span><span>{p.exam}</span></div>
                 </div>
+
+                <div className="me-persona-section">
+                  <div className="me-ps-label" style={{ color: p.color }}>Goals</div>
+                  <ul className="me-ps-list">{p.goals.map(g => <li key={g}>{g}</li>)}</ul>
+                </div>
+                <div className="me-persona-section">
+                  <div className="me-ps-label">Frustrations</div>
+                  <ul className="me-ps-list me-ps-list--red">{p.frustrations.map(f => <li key={f}>{f}</li>)}</ul>
+                </div>
+                <div className="me-persona-section">
+                  <div className="me-ps-label">Behaviors</div>
+                  <ul className="me-ps-list">{p.behaviors.map(b => <li key={b}>{b}</li>)}</ul>
+                </div>
+
+                <div className="me-persona-state">{p.state}</div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH05 — USER JOURNEY FLOWS
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ PROBLEM FRAMING ════════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">05</span>
-            <span className="me-eyebrow">User Journey Flows</span>
+            <span className="me-eyebrow">Problem Framing</span>
           </div>
 
-          <h2 className="me-section-title me-reveal">Five critical flows mapped — from <span className="me-amber">first login</span> to graded result.</h2>
+          <h2 className="me-section-title me-reveal">
+            How Might We + five <span className="me-amber">design principles</span> that governed every decision.
+          </h2>
 
-          <p className="me-body me-reveal">
-            Each flow was mapped end-to-end, from the student's trigger moment through to outcome.
-            The student onboarding flow is 10 steps; the simulation engine is 5. Every flow was
-            pressure-tested in prototype sessions before spec was written.
-          </p>
+          <h3 className="me-sub-heading me-reveal">How Might We</h3>
+          <div className="me-hmw-list me-reveal-stagger">
+            {HMW.map((h, i) => (
+              <div className="me-hmw" key={i}>
+                <span className="me-hmw-num">{String(i + 1).padStart(2, '0')}</span>
+                <p>{h}</p>
+              </div>
+            ))}
+          </div>
 
-          <div className="me-reveal">
-            <Carousel slides={FLOW_SLIDES} />
+          <h3 className="me-sub-heading me-reveal" style={{ marginTop: '3.5rem' }}>Design Principles</h3>
+          <div className="me-principles me-reveal-stagger">
+            {DESIGN_PRINCIPLES.map(dp => (
+              <div className="me-principle" key={dp.principle}>
+                <h4 className="me-principle-title">{dp.principle}</h4>
+                <p className="me-principle-rationale">{dp.rationale}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH06 — FEATURES
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ IDEATION & PRIORITIZATION ══════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">06</span>
-            <span className="me-eyebrow">Feature Modules</span>
+            <span className="me-eyebrow">Ideation & Prioritization</span>
           </div>
 
           <h2 className="me-section-title me-reveal">
-            Eight modules. Every one tied to a <span className="me-amber">student outcome</span>, not a feature list.
+            8 features. 3 priority tiers. Every decision tied to a <span className="me-amber">user problem</span>.
           </h2>
 
-          <div className="me-features me-reveal-stagger">
+          <p className="me-body me-reveal">
+            After Crazy 8s sketching, HMW brainstorming, and JTBD story mapping, we ran an Impact vs. Effort
+            matrix to prioritize. Three P0 features define the core differentiator — everything else ladders to them.
+          </p>
+
+          <div className="me-feature-table me-reveal">
+            <div className="me-ft-header">
+              <div>Feature</div>
+              <div>Problem Addressed</div>
+              <div>Priority</div>
+              <div>Impact / Effort</div>
+            </div>
             {FEATURES.map(f => (
-              <div className="me-feature" key={f.num}>
-                <div className="me-feature-header">
-                  <span className="me-feature-num">{f.num}</span>
-                  <span className="me-feature-badge">{f.badge}</span>
+              <div className="me-ft-row" key={f.feature}>
+                <div className="me-ft-feature">{f.feature}</div>
+                <div className="me-ft-problem">{f.problem}</div>
+                <div><PriorityBadge label={f.priority} /></div>
+                <div className="me-ft-ie">
+                  <span className={`me-impact me-impact--${f.impact.toLowerCase().replace(/[^a-z]/g, '-')}`}>{f.impact}</span>
+                  <span className="me-effort">{f.effort}</span>
                 </div>
-                <h3 className="me-feature-title">{f.title}</h3>
-                <p className="me-feature-desc">{f.desc}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH07 — UI / DESIGN
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ UX DESIGN PROCESS ══════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">07</span>
-            <span className="me-eyebrow">Interface Design</span>
+            <span className="me-eyebrow">UX Design Process</span>
           </div>
 
           <h2 className="me-section-title me-reveal">
-            Dashboard, QBank, Simulation, Analytics — designed for the <span className="me-amber">exam-ready mindset</span>.
+            From sketches to a 42-screen prototype — with <span className="me-amber">4 critical UX decisions</span> that changed the product.
           </h2>
 
-          <p className="me-body me-reveal">
-            Every screen centers one question: "Does this help the student know what to study next,
-            and whether they're ready?" The dashboard readiness ring, topic heatmap, and daily agenda
-            answer that question in under 5 seconds per session.
-          </p>
+          <div className="me-phases me-reveal-stagger">
+            {DESIGN_PHASES.map((ph, i) => (
+              <div className="me-phase-card" key={ph.phase}>
+                <div className="me-phase-num">0{i + 1}</div>
+                <h3 className="me-phase-name">{ph.phase}</h3>
+                <p className="me-phase-output">{ph.output}</p>
+                {ph.tested
+                  ? <div className="me-phase-tested">Tested · {ph.test}</div>
+                  : <div className="me-phase-untested">Not user-tested</div>
+                }
+              </div>
+            ))}
+          </div>
 
-          <div className="me-reveal">
-            <Carousel slides={SCREEN_SLIDES} />
+          <h3 className="me-sub-heading me-reveal" style={{ marginTop: '3.5rem' }}>Critical UX Decisions</h3>
+          <div className="me-decisions me-reveal-stagger">
+            {CRITICAL_DECISIONS.map((d, i) => (
+              <div className="me-decision" key={i}>
+                <div className="me-decision-num">{String(i + 1).padStart(2, '0')}</div>
+                <div>
+                  <h4 className="me-decision-title">"{d.decision}"</h4>
+                  <p className="me-decision-rationale">{d.rationale}</p>
+                  <div className="me-decision-dropped">
+                    <span className="me-dropped-label">Alternative dropped →</span> {d.dropped}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH08 — AI COMPONENTS
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ USABILITY TESTING ══════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">08</span>
-            <span className="me-eyebrow">AI Components</span>
+            <span className="me-eyebrow">Usability Testing</span>
           </div>
 
           <h2 className="me-section-title me-reveal">
-            AI that <span className="me-amber">forces good study habits</span> — not just recommends them.
+            Two rounds. SUS score from <span className="me-amber">61 → 79</span>.{' '}
+            Every major finding shipped as a fix.
           </h2>
 
-          <p className="me-body me-reveal">
-            The platform has four AI components, each targeting a specific failure mode identified in
-            research. None of them ask the student to do something differently — they change what the
-            system does automatically.
-          </p>
+          {/* SUS visual */}
+          <div className="me-sus-visual me-reveal">
+            <div className="me-sus-track">
+              <div className="me-sus-bar" style={{ left: `${(61 / 100) * 100}%` }}>
+                <span className="me-sus-label">Round 1<br/><strong>61</strong></span>
+              </div>
+              <div className="me-sus-bar me-sus-bar--r2" style={{ left: `${(79 / 100) * 100}%` }}>
+                <span className="me-sus-label">Round 2<br/><strong>79</strong></span>
+              </div>
+              <div className="me-sus-avg" style={{ left: '68%' }}>
+                <span>Industry avg 68</span>
+              </div>
+            </div>
+            <div className="me-sus-scale">
+              <span>0</span>
+              <span>25</span>
+              <span>50 — Poor</span>
+              <span>68 — Avg</span>
+              <span>75 — Good</span>
+              <span>100</span>
+            </div>
+          </div>
 
-          <div className="me-ai-grid me-reveal-stagger">
-            {AI_COMPONENTS.map(ai => (
-              <div className="me-ai-card" key={ai.title}>
-                <span className="me-ai-icon">{ai.icon}</span>
-                <h3 className="me-ai-title">{ai.title}</h3>
-                <p className="me-ai-desc">{ai.desc}</p>
+          <div className="me-ut-rounds me-reveal-stagger">
+            {USABILITY_ROUNDS.map(r => (
+              <div className="me-ut-round" key={r.round}>
+                <div className="me-ut-round-header">
+                  <div>
+                    <span className="me-ut-round-num">Round {r.round}</span>
+                    <span className="me-ut-fidelity">{r.fidelity}</span>
+                  </div>
+                  <div className="me-ut-meta">
+                    <span>{r.participants} participants</span>
+                    <span>{r.method}</span>
+                  </div>
+                </div>
+                <div className="me-ut-findings">
+                  {r.findings.map((f, i) => (
+                    <div className="me-ut-finding" key={i}>
+                      <div className="me-ut-finding-top">
+                        <SeverityBadge level={f.severity} />
+                        <p className="me-ut-finding-text">{f.finding}</p>
+                      </div>
+                      <div className="me-ut-fix">
+                        <span className="me-fix-label">Fix →</span> {f.fix}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH09 — ARCHITECTURE
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ METRICS FRAMEWORK ══════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">09</span>
-            <span className="me-eyebrow">Architecture & Stack</span>
+            <span className="me-eyebrow">Product Metrics Framework</span>
           </div>
 
           <h2 className="me-section-title me-reveal">
-            Full-stack platform with <span className="me-amber">10 integrated services</span> — from video CDN to exam proctoring.
+            North star: <span className="me-amber">Candidate exam pass rate</span>.
+            Everything else is an input.
           </h2>
 
-          <div className="me-stack me-reveal">
-            {STACK.map(s => (
-              <div className="me-stack-row" key={s.layer}>
-                <span className="me-stack-layer">{s.layer}</span>
-                <span className="me-stack-tech">{s.tech}</span>
-                <span className="me-stack-note">{s.note}</span>
+          <div className="me-north-star me-reveal">
+            <div className="me-ns-icon">⭐</div>
+            <div>
+              <div className="me-ns-label">North Star Metric</div>
+              <div className="me-ns-value">Candidate Exam Pass Rate (first attempt)</div>
+              <p className="me-ns-why">Everything else — engagement, completion, AI usage — is only valuable if it leads to a candidate passing their exam. Pass rate is the true outcome.</p>
+            </div>
+          </div>
+
+          <h3 className="me-sub-heading me-reveal" style={{ marginTop: '2.5rem' }}>Input Metrics</h3>
+          <div className="me-metrics me-reveal-stagger">
+            {INPUT_METRICS.map(m => (
+              <div className="me-metric" key={m.metric}>
+                <div className="me-metric-header">
+                  <span className="me-metric-name">{m.metric}</span>
+                  <div className="me-metric-vals">
+                    <span className="me-metric-current">{m.current}{m.suffix}</span>
+                    <span className="me-metric-target">target {m.target}{m.suffix}</span>
+                  </div>
+                </div>
+                <p className="me-metric-desc">{m.desc}</p>
+                <div className="me-metric-track">
+                  <div
+                    className="me-metric-fill"
+                    data-pct={m.current}
+                    style={{ backgroundColor: m.current >= m.target ? '#22c55e' : '#f59e0b' }}
+                  />
+                  <div className="me-metric-target-line" style={{ left: `${m.target}%` }} />
+                </div>
+                <div className="me-metric-scale">
+                  <span>0%</span>
+                  <span>Target {m.target}%</span>
+                  <span>100%</span>
+                </div>
               </div>
             ))}
           </div>
-
-          <div className="me-arch-placeholder me-reveal">
-            <ImgPlaceholder
-              title="System Architecture Diagram"
-              hint="Frontend → API → DB / Cache / AI / CDN / Auth / Payments / Proctoring"
-              ratio="21/9"
-              dims="3200 × 1350 · Architecture Export"
-            />
-          </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH10 — IMPACT
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ OUTCOMES ═══════════════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">10</span>
-            <span className="me-eyebrow">Impact</span>
+            <span className="me-eyebrow">Outcomes & Impact</span>
           </div>
 
           <h2 className="me-section-title me-reveal">
-            94% pass rate. 3M+ learners. 40% cheaper than the market leader.{' '}
+            94% pass rate. 3M+ learners. 40% cheaper than Becker.{' '}
             <span className="me-amber">That's the product working.</span>
           </h2>
 
@@ -808,90 +898,82 @@ export default function MyExamlyCaseStudy() {
               <p className="me-impact-desc">Across CPA, CMA, and EA certification programs.</p>
             </div>
             <div className="me-impact-card">
-              <span className="me-impact-num">2M+</span>
-              <span className="me-impact-label">Questions answered</span>
-              <p className="me-impact-desc">Practice questions graded and fed back to the adaptive model.</p>
-            </div>
-            <div className="me-impact-card">
               <span className="me-impact-num">30%</span>
-              <span className="me-impact-label">More syllabus covered</span>
-              <p className="me-impact-desc">By students using the AI Scheduler vs. self-directed study.</p>
+              <span className="me-impact-label">Faster syllabus coverage</span>
+              <p className="me-impact-desc">vs. unstructured self-study for AI Scheduler users.</p>
             </div>
             <div className="me-impact-card">
               <span className="me-impact-num">20%</span>
-              <span className="me-impact-label">Higher mock exam scores</span>
-              <p className="me-impact-desc">For students who completed at least 3 full simulation sessions.</p>
+              <span className="me-impact-label">Higher mock scores</span>
+              <p className="me-impact-desc">For students completing ≥3 full simulation sessions.</p>
             </div>
             <div className="me-impact-card">
-              <span className="me-impact-num">22%</span>
-              <span className="me-impact-label">Higher student retention</span>
-              <p className="me-impact-desc">For institutions using the educator at-risk alert dashboard.</p>
+              <span className="me-impact-num">4.6×</span>
+              <span className="me-impact-label">AI tutor usage spike</span>
+              <p className="me-impact-desc">After moving from separate page to floating persistent widget.</p>
             </div>
+            <div className="me-impact-card">
+              <span className="me-impact-num">79</span>
+              <span className="me-impact-label">SUS score (Round 2)</span>
+              <p className="me-impact-desc">Up from 61 in Round 1 · "Good" category · Industry avg: 68.</p>
+            </div>
+          </div>
+
+          <h3 className="me-sub-heading me-reveal" style={{ marginTop: '3.5rem' }}>In Their Words</h3>
+          <div className="me-quotes me-reveal-stagger">
+            {QUOTES.map((q, i) => (
+              <div className="me-quote-card" key={i}>
+                <div className="me-quote-mark">"</div>
+                <p className="me-quote-text">{q.quote}</p>
+                <div className="me-quote-footer">
+                  <span className="me-quote-persona">{q.persona}</span>
+                  <span className="me-quote-outcome">{q.outcome}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH11 — ROADMAP
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ RETROSPECTIVE ══════════════════════════════════════════════════ */}
         <section className="me-section">
           <div className="me-section-label me-reveal">
             <span className="me-ch-num">11</span>
-            <span className="me-eyebrow">Product Roadmap</span>
+            <span className="me-eyebrow">Retrospective</span>
           </div>
 
           <h2 className="me-section-title me-reveal">
-            From 500 MCQs at MVP to <span className="me-amber">VR simulations</span> on the horizon.
+            What worked, what we'd <span className="me-amber">do differently</span>, and what's still open.
           </h2>
 
-          <div className="me-roadmap me-reveal">
-            {ROADMAP.map((phase, i) => (
-              <div className={`me-phase${phase.status === 'planned' ? ' me-phase--planned' : ''}`} key={phase.phase}>
-                <div className="me-phase-spine">
-                  <div className="me-phase-node" />
-                  {i < ROADMAP.length - 1 && <div className="me-phase-line" />}
-                </div>
-                <div className="me-phase-body">
-                  <div className="me-phase-header">
-                    <span className="me-phase-name">{phase.phase}</span>
-                    <span className="me-phase-timeline">{phase.timeline}</span>
-                    {phase.status === 'planned' && <span className="me-phase-status">Planned</span>}
-                  </div>
-                  <ul className="me-phase-milestones">
-                    {phase.milestones.map(m => <li key={m}>{m}</li>)}
-                  </ul>
-                </div>
-              </div>
-            ))}
+          <div className="me-retro-grid me-reveal-stagger">
+            <div className="me-retro-col me-retro-col--worked">
+              <h3 className="me-retro-heading">
+                <span>✓</span> What Worked
+              </h3>
+              <ul className="me-retro-list">
+                {RETRO.worked.map((w, i) => <li key={i}>{w}</li>)}
+              </ul>
+            </div>
+            <div className="me-retro-col me-retro-col--change">
+              <h3 className="me-retro-heading">
+                <span>↩</span> What We'd Do Differently
+              </h3>
+              <ul className="me-retro-list">
+                {RETRO.change.map((c, i) => <li key={i}>{c}</li>)}
+              </ul>
+            </div>
+            <div className="me-retro-col me-retro-col--open">
+              <h3 className="me-retro-heading">
+                <span>?</span> Open Questions
+              </h3>
+              <ul className="me-retro-list">
+                {RETRO.open.map((o, i) => <li key={i}>{o}</li>)}
+              </ul>
+            </div>
           </div>
         </section>
 
-        {/* ════════════════════════════════════════════════════════
-            CH12 — LESSONS
-        ════════════════════════════════════════════════════════ */}
-        <section className="me-section">
-          <div className="me-section-label me-reveal">
-            <span className="me-ch-num">12</span>
-            <span className="me-eyebrow">What I'd Tell Myself at the Start</span>
-          </div>
-
-          <h2 className="me-section-title me-reveal">Five lessons from building an <span className="me-amber">AI-powered EdTech</span> product at scale.</h2>
-
-          <div className="me-lessons me-reveal-stagger">
-            {LESSONS.map(l => (
-              <div className="me-lesson" key={l.num}>
-                <span className="me-lesson-num">{l.num}</span>
-                <div>
-                  <h3 className="me-lesson-title">{l.title}</h3>
-                  <p className="me-lesson-body">{l.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════════════════════════
-            CTA
-        ════════════════════════════════════════════════════════ */}
+        {/* ══ CTA ════════════════════════════════════════════════════════════ */}
         <section className="me-cta-section me-reveal">
           <div className="me-cta-glow" aria-hidden="true" />
           <span className="me-eyebrow">Next</span>
