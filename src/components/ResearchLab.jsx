@@ -11,8 +11,8 @@ gsap.registerPlugin(ScrollTrigger)
 const STATS = [
   { value: 50, suffix: '+', label: 'User Interviews' },
   { value: 500, suffix: '+', label: 'Survey Responses' },
-  { value: 4,  suffix: '',  label: 'States Covered' },
-  { value: 3,  suffix: '',  label: 'Industries' },
+  { value: 4, suffix: '', label: 'States Covered' },
+  { value: 3, suffix: '', label: 'Industries' },
 ]
 
 // ── Methods ───────────────────────────────────────────────────
@@ -110,7 +110,7 @@ const METHODS = [
       'Validated problem statement',
     ],
     field: {
-      product: 'SOPFlow',
+      product: 'MarketU',
       finding:
         '83% of operations managers rated "finding the latest version of an SOP" as their #1 daily friction — not creating them. We had been building the wrong thing entirely.',
       impact:
@@ -173,48 +173,48 @@ const METHODS = [
 function IconInterviews() {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <circle cx="11" cy="7" r="4" stroke="currentColor" strokeWidth="1.5"/>
-      <path d="M3 19c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <circle cx="11" cy="7" r="4" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3 19c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   )
 }
 function IconJourney() {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <path d="M2 11h4l3-7 4 14 3-7h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M2 11h4l3-7 4 14 3-7h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
 function IconPersonas() {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <circle cx="8" cy="7" r="3" stroke="currentColor" strokeWidth="1.5"/>
-      <circle cx="16" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
-      <path d="M1 18c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      <path d="M16 13c2.21 0 4 1.567 4 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <circle cx="8" cy="7" r="3" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="16" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M1 18c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M16 13c2.21 0 4 1.567 4 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   )
 }
 function IconSurveys() {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <rect x="3" y="2" width="16" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-      <path d="M7 7h8M7 11h8M7 15h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <rect x="3" y="2" width="16" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M7 7h8M7 11h8M7 15h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   )
 }
 function IconJTBD() {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <circle cx="11" cy="11" r="9" stroke="currentColor" strokeWidth="1.5"/>
-      <path d="M11 6v5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="11" cy="11" r="9" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M11 6v5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
 function IconOpportunity() {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <path d="M11 2l2.4 7H21l-6.2 4.5 2.4 7L11 16.5 4.8 20.5l2.4-7L1 9h7.6L11 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+      <path d="M11 2l2.4 7H21l-6.2 4.5 2.4 7L11 16.5 4.8 20.5l2.4-7L1 9h7.6L11 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -230,8 +230,8 @@ const METHOD_ICONS = {
 
 export default function ResearchLab() {
   const [activeId, setActiveId] = useState('interviews')
-  const navigate     = useNavigate()
-  const pageRef      = useRef(null)
+  const navigate = useNavigate()
+  const pageRef = useRef(null)
   const activeMethod = METHODS.find(m => m.id === activeId)
 
   useEffect(() => {
@@ -251,7 +251,7 @@ export default function ResearchLab() {
         { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.45 }
       )
       gsap.utils.toArray('.rl-stat-value').forEach((el) => {
-        const target    = parseInt(el.dataset.target, 10)
+        const target = parseInt(el.dataset.target, 10)
         const hasSuffix = el.dataset.suffix || ''
         gsap.fromTo({ val: 0 }, { val: target }, {
           duration: 1.6,
@@ -287,7 +287,7 @@ export default function ResearchLab() {
       <nav className="rl-nav">
         <motion.button className="rl-nav-back" onClick={() => navigate('/')} whileHover={{ x: -3 }} transition={{ duration: 0.2 }}>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Back
         </motion.button>
@@ -391,8 +391,8 @@ export default function ResearchLab() {
                     key={activeId}
                     className="rl-detail"
                     initial={{ opacity: 0, x: 28, filter: 'blur(4px)' }}
-                    animate={{ opacity: 1, x: 0,  filter: 'blur(0px)' }}
-                    exit={{    opacity: 0, x: -28, filter: 'blur(4px)' }}
+                    animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0, x: -28, filter: 'blur(4px)' }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   >
                     {/* Header */}
@@ -438,7 +438,7 @@ export default function ResearchLab() {
                             transition={{ delay: i * 0.07 + 0.15, duration: 0.35 }}
                           >
                             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="rl-check">
-                              <path d="M1.5 5L4 7.5L8.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                              <path d="M1.5 5L4 7.5L8.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                             {o}
                           </motion.li>
@@ -455,7 +455,7 @@ export default function ResearchLab() {
                     >
                       <div className="rl-field-header">
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 7.5L2.5 10L3.5 6.5L1 4.5H4.5L6 1Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+                          <path d="M6 1L7.5 4.5H11L8.5 6.5L9.5 10L6 7.5L2.5 10L3.5 6.5L1 4.5H4.5L6 1Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
                         </svg>
                         <span>From the field — {activeMethod.field.product}</span>
                       </div>

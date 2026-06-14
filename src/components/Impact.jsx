@@ -37,7 +37,7 @@ const CARDS = [
     id: 'savings',
     prefix: '$', target: 1, suffix: 'M',
     metric: 'Operational Savings',
-    context: 'SOPFlow + XOLOX',
+    context: 'MarketU + XOLOX',
     caption: 'Consolidated redundant vendor contracts, refactored cloud resource allocation, and eliminated manual ops work through automation. $1M saved across two products over 18 months.',
     bar: 100,
     accent: '#fb923c',
@@ -52,25 +52,31 @@ export default function Impact() {
       // Section header
       gsap.fromTo('.impact-eyebrow',
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
-          scrollTrigger: { trigger: '.impact-section', start: 'top 78%' } }
+        {
+          y: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: '.impact-section', start: 'top 78%' }
+        }
       )
       gsap.fromTo('.impact-heading',
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.1,
-          scrollTrigger: { trigger: '.impact-section', start: 'top 78%' } }
+        {
+          y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.1,
+          scrollTrigger: { trigger: '.impact-section', start: 'top 78%' }
+        }
       )
 
       // Cards — stagger in
       gsap.fromTo('.impact-card',
         { y: 56, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.1, ease: 'power4.out', stagger: 0.12,
-          scrollTrigger: { trigger: '.impact-grid', start: 'top 82%' } }
+        {
+          y: 0, opacity: 1, duration: 1.1, ease: 'power4.out', stagger: 0.12,
+          scrollTrigger: { trigger: '.impact-grid', start: 'top 82%' }
+        }
       )
 
       // Counter + bar per card
       CARDS.forEach(({ id, prefix, target, suffix, bar }) => {
-        const card  = document.getElementById(`impact-card-${id}`)
+        const card = document.getElementById(`impact-card-${id}`)
         const numEl = card?.querySelector('.impact-number')
         const barEl = card?.querySelector('.impact-bar-fill')
         if (!card) return
@@ -91,8 +97,10 @@ export default function Impact() {
         if (barEl) {
           gsap.fromTo(barEl,
             { scaleX: 0 },
-            { scaleX: bar / 100, duration: 2, ease: 'power3.out', transformOrigin: 'left',
-              scrollTrigger: { trigger: card, start: 'top 85%' } }
+            {
+              scaleX: bar / 100, duration: 2, ease: 'power3.out', transformOrigin: 'left',
+              scrollTrigger: { trigger: card, start: 'top 85%' }
+            }
           )
         }
       })

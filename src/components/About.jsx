@@ -43,7 +43,7 @@ const STAGES = [
     role: 'Product Manager',
     years: '2021 – 2023',
     headline: 'Learned to connect the dots others couldn\'t see.',
-    body: 'PM\'ing Examly LMS, SOPFlow, and Agri Khatha simultaneously. Writing PRDs that engineering actually shipped from. Running prioritization sessions that didn\'t turn into feature arguments. Shipping things that changed real numbers. The job wasn\'t to have answers — it was to ask the right question at the right moment.',
+    body: 'PM\'ing Examly LMS, MarketU, and Agri Khatha simultaneously. Writing PRDs that engineering actually shipped from. Running prioritization sessions that didn\'t turn into feature arguments. Shipping things that changed real numbers. The job wasn\'t to have answers — it was to ask the right question at the right moment.',
     shift: 'I stopped thinking about user outcomes in isolation. I started thinking about business outcomes — and how they reinforce each other.',
     arrow: 'Growth became the next frontier.',
     accent: '#fb923c',
@@ -63,7 +63,7 @@ const STAGES = [
     role: 'AI Product Builder',
     years: '2024 – Now',
     headline: 'The tools changed. The thinking got harder.',
-    body: 'Built SOPFlow with Claude and OpenAI embedded into core workflows — not as a chatbot, as a collaborator. Built MyGold with blockchain verification under the hood. The more capable the AI, the more important the product judgment. AI doesn\'t replace thinking. It demands more of it.',
+    body: 'Built MarketU with Claude and OpenAI embedded into core workflows — not as a chatbot, as a collaborator. Built MyGold with blockchain verification under the hood. The more capable the AI, the more important the product judgment. AI doesn\'t replace thinking. It demands more of it.',
     shift: null,
     arrow: null,
     accent: '#38bdf8',
@@ -71,16 +71,16 @@ const STAGES = [
 ]
 
 export default function About() {
-  const navigate    = useNavigate()
-  const pageRef     = useRef(null)
+  const navigate = useNavigate()
+  const pageRef = useRef(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
 
     const ctx = gsap.context(() => {
       gsap.fromTo('.ab-hero-eyebrow', { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', delay: 0.1 })
-      gsap.fromTo('.ab-hero-title',   { y: 64, opacity: 0 }, { y: 0, opacity: 1, duration: 1,   ease: 'power4.out', delay: 0.2 })
-      gsap.fromTo('.ab-hero-sub',     { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.5 })
+      gsap.fromTo('.ab-hero-title', { y: 64, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.2 })
+      gsap.fromTo('.ab-hero-sub', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.5 })
 
       // Spine scaleY scrub — grows as user scrolls the timeline
       gsap.fromTo('.ab-spine-fill',
@@ -101,25 +101,33 @@ export default function About() {
       gsap.utils.toArray('.ab-stage').forEach((el) => {
         gsap.fromTo(el.querySelector('.ab-stage-content'),
           { x: 32, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.85, ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 80%' } }
+          {
+            x: 0, opacity: 1, duration: 0.85, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 80%' }
+          }
         )
         gsap.fromTo(el.querySelector('.ab-dot'),
           { scale: 0, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(2)',
-            scrollTrigger: { trigger: el, start: 'top 80%' } }
+          {
+            scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(2)',
+            scrollTrigger: { trigger: el, start: 'top 80%' }
+          }
         )
         gsap.fromTo(el.querySelector('.ab-role'),
           { y: 24, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.7, ease: 'power4.out', delay: 0.1,
-            scrollTrigger: { trigger: el, start: 'top 80%' } }
+          {
+            y: 0, opacity: 1, duration: 0.7, ease: 'power4.out', delay: 0.1,
+            scrollTrigger: { trigger: el, start: 'top 80%' }
+          }
         )
       })
 
       gsap.fromTo('.ab-closing-inner',
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
-          scrollTrigger: { trigger: '.ab-closing', start: 'top 80%' } }
+        {
+          y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: '.ab-closing', start: 'top 80%' }
+        }
       )
     }, pageRef)
 
@@ -143,7 +151,7 @@ export default function About() {
           transition={{ duration: 0.2 }}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Back
         </motion.button>

@@ -7,9 +7,9 @@ import './AiLab.css'
 // ── Node definitions (SVG coords: viewBox 0 0 900 480) ───────
 const NODES = [
   {
-    id: 'sopflow',
+    id: 'MarketU',
     x: 450, y: 240,
-    label: 'SOPFlow',
+    label: 'MarketU',
     sublabel: 'Core Product',
     color: '#dfb743',
     glow: 'rgba(223,183,67,0.4)',
@@ -17,7 +17,7 @@ const NODES = [
     r: 36,
     badge: null,
     tagline: 'The orchestration layer.',
-    desc: 'Every AI service routes through SOPFlow\'s backend. It manages SOP lifecycle, versioning, permissions, publishing, and triggers — the connective tissue that makes the entire AI stack coherent.',
+    desc: 'Every AI service routes through MarketU\'s backend. It manages SOP lifecycle, versioning, permissions, publishing, and triggers — the connective tissue that makes the entire AI stack coherent.',
     specs: ['React 18 + Vite', 'Node.js / Express', 'PostgreSQL + pgvector', 'Redis (job queues)'],
     flow: 'All data in, all output out.',
   },
@@ -34,7 +34,7 @@ const NODES = [
     tagline: 'Primary generation engine.',
     desc: 'Claude handles all long-form SOP drafting, rewriting, summarisation, and Q&A over document content. The context window handles entire SOP documents — no chunking hacks required. Instruction-following accuracy for structured output was unmatched when evaluated against GPT-4.',
     specs: ['Messages API (claude-3-opus)', 'Streaming responses', 'System prompt: SOP persona', 'Tool use for structured JSON output'],
-    flow: 'SOPFlow → prompt → Claude → streamed SOP draft',
+    flow: 'MarketU → prompt → Claude → streamed SOP draft',
   },
   {
     id: 'openai',
@@ -47,7 +47,7 @@ const NODES = [
     r: 28,
     badge: 'AI',
     tagline: 'Semantic search backbone.',
-    desc: 'OpenAI\'s text-embedding-ada-002 powers SOPFlow\'s semantic search. When a user searches "how to handle a refund", the query and all SOP content are embedded into vector space — pgvector finds cosine-similar matches. No keyword hell.',
+    desc: 'OpenAI\'s text-embedding-ada-002 powers MarketU\'s semantic search. When a user searches "how to handle a refund", the query and all SOP content are embedded into vector space — pgvector finds cosine-similar matches. No keyword hell.',
     specs: ['text-embedding-ada-002', 'pgvector (PostgreSQL extension)', 'Cosine similarity scoring', 'Batch embedding on SOP save'],
     flow: 'SOP saved → embed → pgvector store → query → ranked results',
   },
@@ -92,7 +92,7 @@ const NODES = [
     r: 28,
     badge: 'SEO',
     tagline: 'Public SOPs are a growth channel.',
-    desc: 'Every time a public SOP is published, SOPFlow auto-submits it to Google Search Console via the Indexing API. Public SOPs — safety checklists, onboarding guides, compliance documents — rank organically and drive new signups. GSC data surfaces which SOP categories attract the most search traffic.',
+    desc: 'Every time a public SOP is published, MarketU auto-submits it to Google Search Console via the Indexing API. Public SOPs — safety checklists, onboarding guides, compliance documents — rank organically and drive new signups. GSC data surfaces which SOP categories attract the most search traffic.',
     specs: ['Google Indexing API (instant submit)', 'Sitemap auto-update on publish', 'Core Web Vitals monitoring', 'Search performance → product insights'],
     flow: 'SOP published → Indexing API ping → GSC monitors → organic traffic loop',
   },
@@ -107,7 +107,7 @@ const NODES = [
     r: 28,
     badge: 'DATA',
     tagline: 'Know what SOPs competitors have built.',
-    desc: 'SERP APIs pull top-ranking SOP and process documentation from across the web for any given industry keyword. SOPFlow uses this to pre-populate template suggestions — when an operations manager opens a blank SOP, they get a "businesses like yours typically document these 12 processes" prompt. Drives activation and content depth.',
+    desc: 'SERP APIs pull top-ranking SOP and process documentation from across the web for any given industry keyword. MarketU uses this to pre-populate template suggestions — when an operations manager opens a blank SOP, they get a "businesses like yours typically document these 12 processes" prompt. Drives activation and content depth.',
     specs: ['SerpAPI / ValueSERP', 'Keyword → top-10 result scrape', 'Claude summarises + structures', 'Template suggestion engine'],
     flow: 'User industry tag → SERP API → Claude structures → template suggestions',
   },
@@ -115,14 +115,14 @@ const NODES = [
 
 // ── Edge definitions ──────────────────────────────────────────
 const EDGES = [
-  { from: 'sopflow', to: 'claude',       label: 'Generation',   dir: 'both' },
-  { from: 'sopflow', to: 'openai',       label: 'Embeddings',   dir: 'both' },
-  { from: 'sopflow', to: 'github',       label: 'Versioning',   dir: 'both' },
-  { from: 'sopflow', to: 'digitalocean', label: 'Hosting',      dir: 'to'   },
-  { from: 'sopflow', to: 'gsc',          label: 'Indexing',     dir: 'to'   },
-  { from: 'sopflow', to: 'serp',         label: 'Research',     dir: 'from' },
-  { from: 'claude',  to: 'openai',       label: 'AI Layer',     dir: 'none' },
-  { from: 'github',  to: 'digitalocean', label: 'CI/CD',        dir: 'to'   },
+  { from: 'MarketU', to: 'claude', label: 'Generation', dir: 'both' },
+  { from: 'MarketU', to: 'openai', label: 'Embeddings', dir: 'both' },
+  { from: 'MarketU', to: 'github', label: 'Versioning', dir: 'both' },
+  { from: 'MarketU', to: 'digitalocean', label: 'Hosting', dir: 'to' },
+  { from: 'MarketU', to: 'gsc', label: 'Indexing', dir: 'to' },
+  { from: 'MarketU', to: 'serp', label: 'Research', dir: 'from' },
+  { from: 'claude', to: 'openai', label: 'AI Layer', dir: 'none' },
+  { from: 'github', to: 'digitalocean', label: 'CI/CD', dir: 'to' },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────
@@ -133,7 +133,7 @@ function edgePath(a, b) {
   const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2
   const curve = Math.hypot(dx, dy) * 0.22
   const nx = -dy / Math.hypot(dx, dy) * curve
-  const ny =  dx / Math.hypot(dx, dy) * curve
+  const ny = dx / Math.hypot(dx, dy) * curve
   return `M${a.x},${a.y} Q${mx + nx},${my + ny} ${b.x},${b.y}`
 }
 
@@ -156,16 +156,16 @@ function ArchGraph({ activeId, onSelect }) {
       <defs>
         {NODES.map(n => (
           <radialGradient key={n.id} id={`glow-${n.id}`} cx="50%" cy="50%" r="50%">
-            <stop offset="0%"   stopColor={n.glow} />
+            <stop offset="0%" stopColor={n.glow} />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
         ))}
         <filter id="blur-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="6" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          <feGaussianBlur stdDeviation="6" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
         <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L6,3 Z" fill="rgba(255,255,255,0.18)"/>
+          <path d="M0,0 L0,6 L6,3 Z" fill="rgba(255,255,255,0.18)" />
         </marker>
       </defs>
 
@@ -290,16 +290,16 @@ function ArchGraph({ activeId, onSelect }) {
 // ── Main component ────────────────────────────────────────────
 export default function AiLab() {
   const [activeId, setActiveId] = useState(null)
-  const navigate   = useNavigate()
+  const navigate = useNavigate()
   const activeNode = activeId ? getNode(activeId) : null
 
   useEffect(() => {
     window.scrollTo(0, 0)
     gsap.fromTo('.al-hero-eyebrow', { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', delay: 0.1 })
-    gsap.fromTo('.al-hero-title',   { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: 'power4.out', delay: 0.2 })
-    gsap.fromTo('.al-hero-sub',     { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.45 })
-    gsap.fromTo('.al-graph',        { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out', delay: 0.5 })
-    gsap.fromTo('.al-hint',         { opacity: 0 }, { opacity: 1, duration: 0.6, delay: 1.2 })
+    gsap.fromTo('.al-hero-title', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: 'power4.out', delay: 0.2 })
+    gsap.fromTo('.al-hero-sub', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.45 })
+    gsap.fromTo('.al-graph', { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out', delay: 0.5 })
+    gsap.fromTo('.al-hint', { opacity: 0 }, { opacity: 1, duration: 0.6, delay: 1.2 })
   }, [])
 
   return (
@@ -313,7 +313,7 @@ export default function AiLab() {
       <nav className="al-nav">
         <motion.button className="al-nav-back" onClick={() => navigate('/')} whileHover={{ x: -3 }} transition={{ duration: 0.2 }}>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Back
         </motion.button>
@@ -335,7 +335,7 @@ export default function AiLab() {
               <span className="gradient-text">A real AI system.</span>
             </h1>
             <p className="al-hero-sub">
-              SOPFlow\'s architecture connects six services into a single coherent product experience. Click any node to see exactly how it fits.
+              MarketU\'s architecture connects six services into a single coherent product experience. Click any node to see exactly how it fits.
             </p>
           </div>
         </section>
@@ -349,7 +349,7 @@ export default function AiLab() {
             {/* Graph panel */}
             <div className="al-graph-panel">
               <div className="al-graph-header">
-                <span className="al-graph-title">SOPFlow Architecture</span>
+                <span className="al-graph-title">MarketU Architecture</span>
                 <div className="al-legend">
                   {Object.entries(TYPE_LABEL).map(([type, label]) => (
                     <span key={type} className="al-legend-item">
@@ -372,14 +372,14 @@ export default function AiLab() {
                   key={activeId}
                   className="al-detail"
                   initial={{ opacity: 0, x: 32, filter: 'blur(6px)' }}
-                  animate={{ opacity: 1, x: 0,  filter: 'blur(0px)' }}
-                  exit={{    opacity: 0, x: -32, filter: 'blur(6px)' }}
+                  animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, x: -32, filter: 'blur(6px)' }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 >
                   {/* Close */}
                   <button className="al-detail-close" onClick={() => setActiveId(null)}>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                      <path d="M2 2L12 12M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M2 2L12 12M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                     </svg>
                   </button>
 
@@ -421,7 +421,7 @@ export default function AiLab() {
                     <span className="al-block-label">Data Flow</span>
                     <div className="al-flow-box" style={{ borderColor: `${activeNode.color}30` }}>
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ color: activeNode.color, flexShrink: 0 }}>
-                        <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                       <span className="al-flow-text">{activeNode.flow}</span>
                     </div>
@@ -433,7 +433,7 @@ export default function AiLab() {
                     <div className="al-connections">
                       {EDGES.filter(e => e.from === activeId || e.to === activeId).map((e, i) => {
                         const otherId = e.from === activeId ? e.to : e.from
-                        const other   = getNode(otherId)
+                        const other = getNode(otherId)
                         return (
                           <button
                             key={i}
@@ -462,9 +462,9 @@ export default function AiLab() {
                   <div className="al-empty-content">
                     <div className="al-empty-icon">
                       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                        <circle cx="14" cy="14" r="12" stroke="rgba(223,183,67,0.3)" strokeWidth="1.5"/>
-                        <circle cx="14" cy="14" r="4" fill="rgba(223,183,67,0.25)"/>
-                        <path d="M14 6v3M14 19v3M6 14h3M19 14h3" stroke="rgba(223,183,67,0.4)" strokeWidth="1.5" strokeLinecap="round"/>
+                        <circle cx="14" cy="14" r="12" stroke="rgba(223,183,67,0.3)" strokeWidth="1.5" />
+                        <circle cx="14" cy="14" r="4" fill="rgba(223,183,67,0.25)" />
+                        <path d="M14 6v3M14 19v3M6 14h3M19 14h3" stroke="rgba(223,183,67,0.4)" strokeWidth="1.5" strokeLinecap="round" />
                       </svg>
                     </div>
                     <p>Select a node in the graph<br />to inspect its role in the system.</p>
@@ -496,10 +496,10 @@ export default function AiLab() {
             <p className="al-principles-label">WHAT I AVOID IN AI PRODUCT DESIGN</p>
             <div className="al-principles-grid">
               {[
-                { bad: 'Wrapper apps',  good: 'Embedded intelligence',  desc: 'AI is a feature inside the workflow, not the workflow itself.' },
-                { bad: 'Magic box UX',  good: 'Transparent AI actions', desc: 'Users see what the AI did and can override any output.' },
-                { bad: 'Hallucination risk',  good: 'Grounded prompts', desc: 'Every Claude call is anchored to user-provided context, not open-ended generation.' },
-                { bad: 'Vendor lock-in', good: 'Swappable services',   desc: 'Embeddings and generation are behind abstraction layers. Swap providers without rewriting product.' },
+                { bad: 'Wrapper apps', good: 'Embedded intelligence', desc: 'AI is a feature inside the workflow, not the workflow itself.' },
+                { bad: 'Magic box UX', good: 'Transparent AI actions', desc: 'Users see what the AI did and can override any output.' },
+                { bad: 'Hallucination risk', good: 'Grounded prompts', desc: 'Every Claude call is anchored to user-provided context, not open-ended generation.' },
+                { bad: 'Vendor lock-in', good: 'Swappable services', desc: 'Embeddings and generation are behind abstraction layers. Swap providers without rewriting product.' },
               ].map((p, i) => (
                 <div key={i} className="al-principle">
                   <div className="al-principle-row">

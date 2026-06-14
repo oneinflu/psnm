@@ -13,6 +13,7 @@ import ResearchLab from './components/ResearchLab'
 import AiLab from './components/AiLab'
 import GreetoCaseStudy from './components/GreetoCaseStudy'
 import MyExamlyCaseStudy from './components/MyExamlyCaseStudy'
+import XoloxCaseStudy from './components/XoloxCaseStudy'
 
 function HomePage() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
       <Route path="/ai-lab"      element={<AiLab />} />
       <Route path="/work/greeto"    element={<GreetoCaseStudy />} />
       <Route path="/work/myexamly"  element={<MyExamlyCaseStudy />} />
+      <Route path="/work/xolox"     element={<XoloxCaseStudy />} />
     </Routes>
   )
 }

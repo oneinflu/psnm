@@ -196,10 +196,10 @@ export const PRODUCTS = [
     },
   },
 
-  // 4. SOPFlow ─────────────────────────────────────────────
+  // 4. MarketU ─────────────────────────────────────────────
   {
-    id: 'sopflow',
-    name: 'SOPFlow',
+    id: 'MarketU',
+    name: 'MarketU',
     tagline: 'Autonomous AI marketing operating system — executes campaigns, content, and SEO without human intervention.',
     meta: { role: 'Creator & Product Owner', timeline: '2024–Present', platform: 'Web SaaS + API' },
     tags: ['AI', 'Marketing Automation', 'SEO', 'Claude', 'OpenAI'],
@@ -209,7 +209,7 @@ export const PRODUCTS = [
         body: 'Businesses were subscribing to 5-8 AI marketing tools that all required human orchestration. ChatGPT for copy, another tool for SEO, another for scheduling, a separate one for analytics. The promise of AI-powered marketing was real; the execution was still a human job. The market needed a system that completed marketing tasks, not just assisted with them.',
       },
       marketContext: {
-        body: 'The marketing automation market was crowded but fragmented. Existing AI tools were point solutions requiring heavy human coordination. No platform had connected AI generation, SEO execution, content publishing, and performance monitoring into one autonomous loop. SOPFlow was built to be the layer that replaced the human coordinator in the marketing stack.',
+        body: 'The marketing automation market was crowded but fragmented. Existing AI tools were point solutions requiring heavy human coordination. No platform had connected AI generation, SEO execution, content publishing, and performance monitoring into one autonomous loop. MarketU was built to be the layer that replaced the human coordinator in the marketing stack.',
         stats: [
           { value: '8+', label: 'Avg. AI tools a marketing team juggles' },
           { value: '40%', label: 'Of marketing budget spent on tool subscriptions' },
@@ -221,7 +221,7 @@ export const PRODUCTS = [
         body: 'Surveyed 80+ marketing managers. Found that 83% rated "finding the right version of an SOP or brief" as their #1 daily friction — not creating content. Teams were rebuilding the same campaign briefs from scratch every quarter. AI tools existed but required a full-time operator. The insight: the problem wasn\'t AI capability — it was AI coordination.',
       },
       insights: [
-        { num: '01', headline: '83% of marketing managers spend 2+ hours per week finding or recreating content briefs that already existed.', body: 'SOPFlow\'s SOP discovery and versioning became a core feature — not just AI generation.' },
+        { num: '01', headline: '83% of marketing managers spend 2+ hours per week finding or recreating content briefs that already existed.', body: 'MarketU\'s SOP discovery and versioning became a core feature — not just AI generation.' },
         { num: '02', headline: 'Marketing AI tools are only as good as the human who orchestrates them.', body: 'This validated the autonomous execution model — the platform needed to connect the tools and run the workflows, not just provide them.' },
         { num: '03', headline: 'Teams abandoned powerful tools because setup complexity exceeded perceived value.', body: 'Drove the "zero configuration" design principle — every workflow had a working default. Customization was optional, not required.' },
       ],
@@ -233,20 +233,20 @@ export const PRODUCTS = [
         { phase: 'Trigger', description: 'Marketing team is drowning in tool subscriptions that individually work but collectively create more work. Or a startup with no marketing hire that needs consistent output.' },
         { phase: 'Discovery', description: 'Search for "AI marketing automation" or referral from another operator who reduced their marketing overhead.' },
         { phase: 'Activation', description: 'First autonomous campaign published — content written, SEO-optimized, published to site, and submitted to Search Console without any human involvement.' },
-        { phase: 'Core Loop', description: 'Define campaign objective → SOPFlow generates → SEO-optimizes → publishes → monitors performance → adjusts and repeats.' },
+        { phase: 'Core Loop', description: 'Define campaign objective → MarketU generates → SEO-optimizes → publishes → monitors performance → adjusts and repeats.' },
         { phase: 'Outcome', description: 'Consistent content output without headcount, measurable SEO growth, and marketing operational overhead reduced by 60%.' },
       ],
       solution: {
-        headline: 'SOPFlow doesn\'t help you do marketing tasks. It does them.',
+        headline: 'MarketU doesn\'t help you do marketing tasks. It does them.',
         body: 'Connected Claude (content generation), OpenAI (embeddings + semantic search), GitHub (versioning), DigitalOcean (infrastructure), Google Search Console (indexing), and SERP APIs (competitive intelligence) into one autonomous execution loop. The system generates, optimizes, publishes, monitors, and iterates — the team sets the objective.',
         decisions: [
-          'Autonomous execution over AI assistance — SOPFlow completes tasks, not just drafts them. Human approval is optional, not required.',
+          'Autonomous execution over AI assistance — MarketU completes tasks, not just drafts them. Human approval is optional, not required.',
           'GitHub-backed versioning for all content — every SOP and piece of content tracked as code, with full diff history and rollback.',
           'SERP API → Claude pipeline for template suggestions — when a user opens a new campaign, they get "companies like yours typically run these 5 campaigns" as a starting point.',
         ],
       },
       impact: [
-        { metric: '60%', label: 'Marketing overhead reduction', description: 'For teams using SOPFlow vs. manual AI tool coordination.' },
+        { metric: '60%', label: 'Marketing overhead reduction', description: 'For teams using MarketU vs. manual AI tool coordination.' },
         { metric: '90s', label: 'Content → published pipeline', description: 'From generation to live website publish including SEO optimization.' },
         { metric: '$1M', label: 'Operational savings projection', description: 'Across first 10 enterprise clients over 18 months.' },
       ],
@@ -423,11 +423,11 @@ const FEATURED = [
   },
   {
     num: '04',
-    productId: 'sopflow',
-    name: 'SOPFlow',
+    productId: 'MarketU',
+    name: 'MarketU',
     tagline: 'Autonomous AI Marketing Operating System',
     category: 'AI · Automation',
-    desc: 'A fully autonomous AI platform capable of executing marketing operations with minimal human intervention. The system connects OpenAI, Claude, GitHub, Google Search Console, SERP APIs, and DigitalOcean into one automated growth engine. Instead of helping marketers create tasks, SOPFlow completes the tasks.',
+    desc: 'A fully autonomous AI platform capable of executing marketing operations with minimal human intervention. The system connects OpenAI, Claude, GitHub, Google Search Console, SERP APIs, and DigitalOcean into one automated growth engine. Instead of helping marketers create tasks, MarketU completes the tasks.',
     contributions: ['Product Vision', 'AI Workflow Design', 'System Architecture', 'Automation Strategy', 'Product Ownership'],
     modules: { label: 'Capabilities', items: ['SEO Automation', 'Content Operations', 'Website Publishing', 'Performance Monitoring', 'Growth Execution'] },
     role: 'Creator & Product Owner',
@@ -557,7 +557,7 @@ function FeaturedCard({ item, onOpenCaseStudy }) {
           >
             Read Case Study
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
         </div>
@@ -588,10 +588,10 @@ function SecondaryCard({ item }) {
 //  WORK SECTION
 // ═══════════════════════════════════════════════════════════
 // Products with dedicated page routes instead of overlay
-const ROUTED_CASE_STUDIES = { greeto: '/work/greeto', 'examly-lms': '/work/myexamly' }
+const ROUTED_CASE_STUDIES = { greeto: '/work/greeto', 'examly-lms': '/work/myexamly', 'xolox-crm': '/work/xolox' }
 
 export default function Work() {
-  const navigate    = useNavigate()
+  const navigate = useNavigate()
   const [openId, setOpenId] = useState(null)
   const openProduct = PRODUCTS.find(p => p.id === openId)
 
@@ -607,28 +607,38 @@ export default function Work() {
     const ctx = gsap.context(() => {
       gsap.fromTo('.work-hero-eyebrow',
         { y: 16, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out',
-          scrollTrigger: { trigger: '#work', start: 'top 80%' } }
+        {
+          y: 0, opacity: 1, duration: 0.6, ease: 'power3.out',
+          scrollTrigger: { trigger: '#work', start: 'top 80%' }
+        }
       )
       gsap.fromTo('.work-hero-title',
         { y: 48, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.1,
-          scrollTrigger: { trigger: '#work', start: 'top 80%' } }
+        {
+          y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.1,
+          scrollTrigger: { trigger: '#work', start: 'top 80%' }
+        }
       )
       gsap.fromTo('.work-hero-desc',
         { y: 24, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.3,
-          scrollTrigger: { trigger: '#work', start: 'top 80%' } }
+        {
+          y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.3,
+          scrollTrigger: { trigger: '#work', start: 'top 80%' }
+        }
       )
       gsap.fromTo('.fp-card',
         { y: 64, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.15, duration: 1.1, ease: 'power4.out',
-          scrollTrigger: { trigger: '.fp-grid', start: 'top 82%' } }
+        {
+          y: 0, opacity: 1, stagger: 0.15, duration: 1.1, ease: 'power4.out',
+          scrollTrigger: { trigger: '.fp-grid', start: 'top 82%' }
+        }
       )
       gsap.fromTo('.sp-card',
         { y: 32, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: '.sp-grid', start: 'top 85%' } }
+        {
+          y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: '.sp-grid', start: 'top 85%' }
+        }
       )
     })
     return () => ctx.revert()
