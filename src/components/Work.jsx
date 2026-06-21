@@ -588,7 +588,7 @@ function SecondaryCard({ item }) {
 //  WORK SECTION
 // ═══════════════════════════════════════════════════════════
 // Products with dedicated page routes instead of overlay
-const ROUTED_CASE_STUDIES = { greeto: '/work/greeto', 'examly-lms': '/work/myexamly', 'xolox-crm': '/work/xolox' }
+const ROUTED_CASE_STUDIES = { greeto: '/work/greeto', 'examly-lms': '/work/myexamly', 'xolox-crm': '/work/xolox', 'MarketU': '/work/marketu' }
 
 export default function Work() {
   const navigate = useNavigate()
